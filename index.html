@@ -396,105 +396,98 @@
       });
     });
   </script>
-<!-- HORLOGE VESTIGIENNE FIXE +01 → +00 (basée sur Paris) -->
+<!-- HORLOGE VESTIGIENNE FIXE AVEC FUSEAUX REELS -->
 <style>
-  #horlogeVestFixe {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: black;
-    padding: 12px;
-    z-index: 9999;
-    text-align: center;
-  }
+#horlogeVestFixe {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  padding: 12px;
+  z-index: 9999;
+  text-align: center;
+  color: white;
+  font-family: monospace;
+}
 
-  #horlogeVestFixe select {
-    width: 100%;
-    font-size: 1.5rem;
-    padding: 10px;
-    font-family: monospace;
-    color: white;
-    background: black;
-  }
+#horlogeVestFixe select {
+  width: 60%;
+  font-size: 1.5rem;
+  padding: 10px;
+  font-family: monospace;
+}
+
+#horlogeVestFixe span {
+  font-size: 1.5rem;
+  margin-left: 15px;
+  display: inline-block;
+  width: 120px; /* fixe largeur pour aligner */
+  text-align: left;
+}
 </style>
 
 <div id="horlogeVestFixe">
   <select id="vestFuseaux"></select>
+  <span id="heureVestAffiche">--:--</span>
 </div>
 
 <script>
-  const selectVest = document.getElementById("vestFuseaux");
+const selectVest = document.getElementById("vestFuseaux");
+const heureVestAffiche = document.getElementById("heureVestAffiche");
 
-  // Heure de référence : 16:44 à Paris = 00:00 vestigienne
-  const refHour = 16;
-  const refMinute = 44;
+// Liste fuseaux réels (UTC−12 → UTC+12, incluant 30 et 45 min)
+const fuseauxReels = [
+  -12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4.5, -4, -3.5, -3, -2, -1,
+  0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 12
+];
 
-  function heureVest(offset) {
-    const now = new Date();
+// Heure vestigienne = 00:00 quand Paris = 15:44
+const baseParisH = 15;
+const baseParisM = 44;
 
-    // Heure à Paris
-    const parisOffset = 1; // UTC+1 pour Paris
-    const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-    const parisTime = new Date(utcMs + parisOffset * 3600000);
+function pad(n){ return String(n).padStart(2,"0"); }
 
-    // Heure vestigienne = diff avec 16:44
-    let h = parisTime.getHours() - refHour;
-    let m = parisTime.getMinutes() - refMinute;
-    if (m < 0) { m += 60; h -= 1; }
-    if (h < 0) { h += 24; }
-    h = h % 24;
+function heureVest(offset) {
+  const now = new Date();
+  // Temps UTC
+  const utc = now.getTime() + now.getTimezoneOffset()*60000;
+  // Heure locale du fuseau
+  const local = new Date(utc + offset*3600000);
+  
+  // Heure vestigienne par rapport à Paris UTC+1
+  const hParis = local.getUTCHours() + 1; // Paris = UTC+1
+  const mParis = local.getUTCMinutes();
+  
+  let hVest = hParis - baseParisH;
+  let mVest = mParis - baseParisM;
+  if(mVest < 0){ mVest += 60; hVest -= 1; }
+  if(hVest < 0){ hVest += 24; }
+  hVest = hVest % 24;
+  
+  return pad(hVest) + ":" + pad(mVest);
+}
 
-    // Décalage pour fuseau choisi
-    h = (h + offset) % 24;
+// Remplissage du select
+fuseauxReels.forEach(f => {
+  const o = document.createElement("option");
+  const signe = f > 0 ? "+" : f < 0 ? "-" : "";
+  const h = Math.floor(Math.abs(f));
+  const m = (Math.abs(f)-h)*60;
+  o.value = f;
+  o.textContent = `UTC${signe}${h}${m>0?":"+pad(m):""}`;
+  selectVest.appendChild(o);
+});
 
-    return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;
-  }
+// Mise à jour de l'heure vestigienne affichée
+function majHeureVest(){
+  const f = parseFloat(selectVest.value);
+  heureVestAffiche.textContent = heureVest(f);
+}
 
-  function majVest() {
-    const current = selectVest.value;
-    selectVest.innerHTML = "";
-
-    for (let i = 0; i <= 23; i++) {
-      const o = document.createElement("option");
-      o.value = i;
-      o.textContent = `UTC+${i} — ${heureVest(i)}`;
-      if (current == i) o.selected = true;
-      selectVest.appendChild(o);
-    }
-  }
-
-  majVest();
-  setInterval(majVest, 1000);
-
-  // garde la sélection
-  selectVest.addEventListener("change", () => {
-    const val = selectVest.value;
-    majVest();
-    selectVest.value = val;
-  });
+selectVest.addEventListener("change", majHeureVest);
+majHeureVest();
+setInterval(majHeureVest,1000); // met à jour seulement le texte, pas le menu
 </script>
-
-</script>
-</body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
