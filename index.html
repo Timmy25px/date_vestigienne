@@ -132,6 +132,8 @@
   <header>
     <div id="dateLigne" class="date"></div>
     <div id="heureLigne" class="heure"></div>
+<div style="font-size:1.2rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.3rem;">Temps international</div>
+
   </header>
 
   <main>
@@ -287,7 +289,7 @@
         <div class="faq-content">
           <ul>
             <li>I    Janvier   : 31 jours</li>
-            <li>II   Fevrier   : 29-30 jours</li>
+            <li>II   Fevrier   : ~29 jours</li>
             <li>III  Mars      : 31 jours</li>
             <li>IV   Avril     : 30 jours</li>
             <li>V    Mai       : 31 jours</li>
@@ -303,7 +305,7 @@
 
         <h3>FAQ 2 : Quel est le nombre de jours par année (cliquez ici)</h3>
         <div class="faq-content">
-          <p>Chaque année vestigienne comporte <strong>~367 jours</strong>.</p>
+          <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
         </div>
       </div>
   </main>
@@ -317,7 +319,7 @@
   </div>
 
   <script>
-    const ORIGINE = new Date(2022, 6, 29, 16, 44, 0); // 28 août 2022 à 16:44
+    const ORIGINE = new Date(2022, 6, 29, 17, 44, 0); // 28 août 2022 à 16:44
 
     function pad(n, taille) { return String(n).padStart(taille, "0"); }
 
@@ -436,7 +438,7 @@
 const selectVest = document.getElementById("vestFuseaux");
 const heureVestAffiche = document.getElementById("heureVestAffiche");
 
-// Liste fuseaux réels (UTC−12 → UTC+12, incluant 30 et 45 min)
+// Liste fuseaux réels (GMT−12 → GMT+12, incluant 30 et 45 min)
 const fuseauxReels = [
   -12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4.5, -4, -3.5, -3, -2, -1,
   0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 12
@@ -450,13 +452,13 @@ function pad(n){ return String(n).padStart(2,"0"); }
 
 function heureVest(offset) {
   const now = new Date();
-  // Temps UTC
+  // Temps GMT
   const utc = now.getTime() + now.getTimezoneOffset()*60000;
   // Heure locale du fuseau
   const local = new Date(utc + offset*3600000);
   
-  // Heure vestigienne par rapport à Paris UTC+1
-  const hParis = local.getUTCHours() + 1; // Paris = UTC+1
+  // Heure vestigienne par rapport à Paris GMT+1
+  const hParis = local.getUTCHours() + 1; // Paris = GMT+1
   const mParis = local.getUTCMinutes();
   
   let hVest = hParis - baseParisH;
@@ -475,12 +477,28 @@ fuseauxReels.forEach(f => {
   const h = Math.floor(Math.abs(f));
   const m = (Math.abs(f)-h)*60;
   o.value = f;
-  o.textContent = `UTC${signe}${h}${m>0?":"+pad(m):""}`;
+  o.textContent = `GMT${signe}${h}${m>0?":"+pad(m):""}`;
   selectVest.appendChild(o);
 });
 
 // Mise à jour de l'heure vestigienne affichée
 function majHeureVest(){
+function mettreFuseauMinuitEnGras() {
+  const options = selectVest.options;
+  for (let i = 0; i < options.length; i++) {
+    // reset tout d'abord
+    options[i].style.fontWeight = "normal";
+    // si l'heure vestigienne avec ce fuseau est 00:00
+    if (heureVest(parseFloat(options[i].value)) === "00:00") {
+      options[i].style.fontWeight = "bold";
+    }
+  }
+}
+
+// Appelle après majHeureVest et à chaque intervalle
+mettreFuseauMinuitEnGras();
+setInterval(mettreFuseauMinuitEnGras, 1000);
+
   const f = parseFloat(selectVest.value);
   heureVestAffiche.textContent = heureVest(f);
 }
