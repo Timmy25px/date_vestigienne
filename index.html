@@ -374,7 +374,7 @@
       }
 
       // Texte
-      const dateTxt = `${pad(jourVest,2)}/${pad(moisVest,2)}/${pad(anneeVest,4)}`;
+      const dateTxt = `${pad(jourVest,2)}/${pad(moisVest,2)}/${pad(anneeVest,10)}`;
       const heureTxt = `${pad(heures,2)}:${pad(minutes,2)}:${pad(secondes,2)}`;
 
       document.getElementById("dateLigne").textContent = dateTxt;
@@ -507,5 +507,6 @@ selectVest.addEventListener("change", majHeureVest);
 majHeureVest();
 setInterval(majHeureVest,1000); // met à jour seulement le texte, pas le menu
 </script>
+
 
 </html>
