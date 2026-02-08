@@ -288,18 +288,18 @@
         <h3>FAQ 1 : Quel est le nombre de jours par mois (cliquez ici)</h3>
         <div class="faq-content">
           <ul>
-            <li>I    Janvier   : 31 jours</li>
-            <li>II   Fevrier   : ~29 jours</li>
-            <li>III  Mars      : 31 jours</li>
-            <li>IV   Avril     : 30 jours</li>
-            <li>V    Mai       : 31 jours</li>
-            <li>VI   Juin      : 30 jours</li>
-            <li>VII  Juillet   : 31 jours</li>
-            <li>VIII Août      : 31 jours</li>
-            <li>IX   Septembre : 30 jours</li>
-            <li>X    Octobre   : 31 jours</li>
-            <li>XI   Novembre  : 30 jours</li>
-            <li>XII  Decembre  : 31 jours</li>
+            <li>I    Januor   : 31 jours</li>
+            <li>II   Fevrial   : ~29 jours</li>
+            <li>III  Marsuor      : 31 jours</li>
+            <li>IV   Aviron     : 30 jours</li>
+            <li>V    Maïlo       : 31 jours</li>
+            <li>VI   Junel     : 30 jours</li>
+            <li>VII  Juilor   : 31 jours</li>
+            <li>VIII Aoûstin      : 31 jours</li>
+            <li>IX   Septor : 30 jours</li>
+            <li>X    Octel   : 31 jours</li>
+            <li>XI   Novin  : 30 jours</li>
+            <li>XII  Decaro  : 31 jours</li>
           </ul>
         </div>
 
@@ -320,6 +320,20 @@
 
   <script>
     const ORIGINE = new Date(2022, 6, 29, 17, 44, 0); // 28 août 2022 à 16:44
+const MOIS_VEST = [
+  "Januor",
+  "Févrial",
+  "Marsuor",
+  "Avrion",
+  "Maïlo",
+  "Junel",
+  "Juilor",
+  "Aoustin",
+  "Septor",
+  "Octel",
+  "Novin",
+  "Décaro"
+];
 
     function pad(n, taille) { return String(n).padStart(taille, "0"); }
 
@@ -374,7 +388,7 @@
       }
 
       // Texte
-      const dateTxt = `${pad(jourVest,2)}/${pad(moisVest,2)}/${pad(anneeVest,5)}`;
+const dateTxt = `${pad(jourVest,2)} ${MOIS_VEST[moisVest-1]} ${String(parseInt(anneeVest,10)).padStart(4,"0")}`;
       const heureTxt = `${pad(heures,2)}:${pad(minutes,2)}:${pad(secondes,2)}`;
 
       document.getElementById("dateLigne").textContent = dateTxt;
@@ -510,4 +524,3 @@ setInterval(majHeureVest,1000); // met à jour seulement le texte, pas le menu
 
 
 </html>
-
