@@ -1070,5 +1070,79 @@ window.addEventListener("resize", showResponsiveMessage);
   }
 }
 </style>
+<style>
+/* === MESSAGE MOBILE ONLY === */
+#mobile-blocker {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  z-index: 999999;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Contenu centré */
+#mobile-blocker .content {
+  max-width: 520px;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+#mobile-blocker .title {
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+#mobile-blocker .message {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+#mobile-blocker .signature {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.5;
+  letter-spacing: 0.08em;
+}
+
+/* === DÉTECTION TÉLÉPHONE === */
+/* Mobile uniquement */
+@media only screen and (max-width: 768px) and (pointer: coarse) {
+  #mobile-blocker {
+    display: block;
+  }
+
+  body > *:not(#mobile-blocker) {
+    display: none !important;
+  }
+}
+</style>
+
+<div id="mobile-blocker">
+  <div class="content">
+    <div class="title">Accès restreint</div>
+    <div class="message">
+      Cette interface n’est pas disponible sur smartphone.<br><br>
+      Pour une expérience optimale, un affichage tablette ou ordinateur est requis.<br>
+      Ce projet repose sur une architecture visuelle, temporelle et technique
+      qui nécessite un format d’écran large pour être interprété correctement.
+    </div>
+    <div class="signature">
+      Interface adaptive · Version responsive sécurisée
+    </div>
+  </div>
+</div>
+
 
 </html>
