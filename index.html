@@ -1015,5 +1015,60 @@ function showResponsiveMessage(){
 showResponsiveMessage();
 window.addEventListener("resize", showResponsiveMessage);
 </script>
+<!-- MOBILE ONLY MESSAGE -->
+<div class="mobile-only-overlay">
+  <div class="mobile-box">
+    <div class="mobile-title">Interface mobile active</div>
+    <div class="mobile-text">
+      Vous consultez la version mobile du système temporel vestigien.<br><br>
+      L’interface s’adapte automatiquement à votre écran afin de garantir une lisibilité optimale
+      et une navigation fluide sur format mobile.<br><br>
+      Pour une visualisation complète des structures temporelles et des données étendues,
+      l’utilisation d’une tablette ou d’un ordinateur est recommandée.
+    </div>
+  </div>
+</div>
+
+<style>
+/* BASE : caché partout */
+.mobile-only-overlay{
+  display:none;
+}
+
+/* MOBILE UNIQUEMENT */
+@media screen and (max-width: 600px) {
+  .mobile-only-overlay{
+    display:flex;
+    position:fixed;
+    inset:0;
+    background:black;
+    z-index:999999;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:2rem;
+  }
+
+  .mobile-box{
+    max-width:420px;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mobile-title{
+    font-size:1.4rem;
+    font-weight:bold;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:1rem;
+  }
+
+  .mobile-text{
+    font-size:0.95rem;
+    line-height:1.6;
+    opacity:0.9;
+  }
+}
+</style>
 
 </html>
