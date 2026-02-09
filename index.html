@@ -876,5 +876,68 @@ setInterval(() => {
 secureUTCSync();
 setInterval(secureUTCSync, 60000);
 </script>
+<!-- MESSAGE RESPONSIVE MOBILE ONLY -->
+<div id="responsiveMobileMsg">
+  <div class="responsive-box">
+    <div class="responsive-title">Interface mobile active</div>
+    <div class="responsive-text">
+      Vous consultez actuellement la version mobile du système temporel vestigien.<br><br>
+      L’interface s’adapte automatiquement à votre appareil afin de garantir une lisibilité optimale,
+      une navigation fluide et une expérience cohérente sur écran réduit.<br><br>
+      Pour un affichage étendu et une visualisation complète des structures temporelles,
+      privilégiez une tablette ou un ordinateur.
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===== RESPONSIVE SYSTEM MESSAGE ===== */
+
+#responsiveMobileMsg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:black;
+  z-index:5000;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:2rem;
+}
+
+.responsive-box{
+  max-width:420px;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.responsive-title{
+  font-size:1.4rem;
+  font-weight:bold;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+
+.responsive-text{
+  font-size:0.95rem;
+  line-height:1.6;
+  opacity:0.9;
+}
+
+/* ===== MOBILE ONLY ===== */
+@media (max-width: 768px) {
+  #responsiveMobileMsg{
+    display:flex;
+  }
+}
+
+/* ===== TABLET & DESKTOP ===== */
+@media (min-width: 769px) {
+  #responsiveMobileMsg{
+    display:none !important;
+  }
+}
+</style>
 
 </html>
