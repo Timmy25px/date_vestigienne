@@ -286,49 +286,140 @@
   </p>
 </div>
 
-      <div class="faq">
-        <h3>FAQ 1 : Quel est le nombre de jours par mois (cliquez ici)</h3>
-        <div class="faq-content">
-          <ul>
-            <li>I    Januor   : 31 jours</li>
-            <li>II   Fevrial   : ~29 jours</li>
-            <li>III  Marsuor      : 31 jours</li>
-            <li>IV   Aviron     : 30 jours</li>
-            <li>V    Maïlo       : 31 jours</li>
-            <li>VI   Junel     : 30 jours</li>
-            <li>VII  Juilor   : 31 jours</li>
-            <li>VIII Aoûstin      : 31 jours</li>
-            <li>IX   Septor : 30 jours</li>
-            <li>X    Octel   : 31 jours</li>
-            <li>XI   Novin  : 30 jours</li>
-            <li>XII  Decaro  : 31 jours</li>
-          </ul>
-        </div>
+    <div class="faq">
+  <h3>FAQ 1 : Nombre de jours par mois (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+      <li>I    Januor   : 31 jours</li>
+      <li>II   Févrial  : ~29 jours</li>
+      <li>III  Marsuor : 31 jours</li>
+      <li>IV   Avrion   : 30 jours</li>
+      <li>V    Maïlo    : 31 jours</li>
+      <li>VI   Junel    : 30 jours</li>
+      <li>VII  Juilor   : 31 jours</li>
+      <li>VIII Aoustin  : 31 jours</li>
+      <li>IX   Septor   : 30 jours</li>
+      <li>X    Octel    : 31 jours</li>
+      <li>XI   Novin    : 30 jours</li>
+      <li>XII  Décaro   : 31 jours</li>
+    </ul>
+  </div>
 
-        <h3>FAQ 2 : Quel est le nombre de jours par année (cliquez ici)</h3>
-        <div class="faq-content">
-          <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
-        </div>
-      </div>
-<p>
-<p>
-<h2><h2>
-	<h4>Décalage de l'horloge en milisecondes (ms) selon le type de connexion utilisé<h4>
-	<p>
-<p>
-	<li>conexxion LAN (RJ45/Ethernet)
-<li> ~1 ms
-<p>
-        <li>connexion fibre (Fible optique)
-<li> ~2–5 ms
-<p>
-        <li>connextion 4G (LTE)
-<li> ~10–40 ms
-<p>
-        <li>connexion WiFi (via une box)
-<li> ~5–30 ms
-<p>
-	</p>
+  <h3>FAQ 2 : Nombre de jours par année (cliquez ici)</h3>
+  <div class="faq-content">
+    <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
+  </div>
+
+  <h3>FAQ 3 : Aires vestigiennes (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+      <li>0000 - 0899 : "Aire du Commencement"</li>
+      <li>0900 - 1749 : "Aire de l’Éveil"</li>
+      <li>1750 - 2649 : "Aire de la Croissance"</li>
+      <li>2650 - 3524 : "Aire de la Découverte"</li>
+      <li>3525 - 4389 : "Aire de l’Expansion"</li>
+      <li>4390 - 5279 : "Aire de la Consolidation"</li>
+      <li>5280 - 6154 : "Aire de la Maîtrise"</li>
+      <li>6155 - 7039 : "Aire de l’Harmonie"</li>
+      <li>7040 - 7914 : "Aire de la Transformation"</li>
+      <li>7915 - 8799 : "Aire de la Révélation"</li>
+      <li>8800 - 9674 : "Aire de l’Accomplissement"</li>
+      <li>9675 - 10000 : "Aire de la Plénitude"</li>
+    </ul>
+  </div>
+
+  <h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+      <li>Connexion LAN (RJ45/Ethernet) : ~1 ms</li>
+      <li>Connexion fibre (Fibre optique) : ~2–5 ms</li>
+      <li>Connexion 4G (LTE) : ~10–40 ms</li>
+      <li>Connexion WiFi (via une box) : ~5–30 ms</li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Toggle uniquement ce bloc
+    content.classList.toggle('open');
+  });
+});
+</script>
+
+
+<style>
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Si déjà ouvert, on ferme
+    if(content.classList.contains('open')){
+      content.classList.remove('open');
+    } else {
+      // Ferme toutes les autres FAQ
+      document.querySelectorAll('.faq-content').forEach(fc => fc.classList.remove('open'));
+      // Ouvre celle-ci
+      content.classList.add('open');
+    }
+  });
+});
+</script>
              </div>
                  </main>
 
