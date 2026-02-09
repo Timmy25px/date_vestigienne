@@ -939,5 +939,81 @@ setInterval(secureUTCSync, 60000);
   }
 }
 </style>
+<!-- MOBILE RESPONSIVE SYSTEM MESSAGE -->
+<div id="responsiveMobileMsg">
+  <div class="responsive-box">
+    <div class="responsive-title">Interface mobile active</div>
+    <div class="responsive-text">
+      Vous consultez actuellement la version mobile du système temporel vestigien.<br><br>
+      L’interface s’adapte automatiquement à votre appareil afin de garantir une lisibilité optimale,
+      une navigation fluide et une expérience cohérente sur écran réduit.<br><br>
+      Pour un affichage étendu et une visualisation complète des structures temporelles,
+      l’utilisation d’une tablette ou d’un ordinateur est recommandée.
+    </div>
+  </div>
+</div>
+
+<style>
+#responsiveMobileMsg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:black;
+  z-index:5000;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:2rem;
+}
+
+.responsive-box{
+  max-width:420px;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.responsive-title{
+  font-size:1.4rem;
+  font-weight:bold;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+
+.responsive-text{
+  font-size:0.95rem;
+  line-height:1.6;
+  opacity:0.9;
+}
+</style>
+
+<script>
+/* ===== REAL DEVICE DETECTION ===== */
+
+function isMobileDevice(){
+  return (
+    /Android|iPhone|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)
+    && !/iPad|Tablet/i.test(navigator.userAgent)
+  );
+}
+
+function isSmallScreen(){
+  return window.innerWidth <= 768;
+}
+
+function showResponsiveMessage(){
+  const box = document.getElementById("responsiveMobileMsg");
+
+  // Téléphone réel OU petit écran + userAgent mobile
+  if(isMobileDevice() || (isSmallScreen() && "ontouchstart" in window)){
+    box.style.display = "flex";
+  } else {
+    box.style.display = "none";
+  }
+}
+
+showResponsiveMessage();
+window.addEventListener("resize", showResponsiveMessage);
+</script>
 
 </html>
