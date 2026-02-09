@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Vestigian Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* RESET */
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* HEADER STICKY */
+    header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 10;
+      border-bottom: 1px solid #000;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+
+    .date {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .heure {
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      letter-spacing: 0.08em;
+    }
+
+    /* CONTENU */
+    main {
+      padding: 2.5rem 1.5rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .definition {
+      font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .definition h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .definition em { font-style: italic; }
+
+    /* FAQ STYLES */
+    .faq { margin-top: 2rem; }
+    .faq h3 {
+      cursor: pointer;
+      background: #eee;
+      padding: 0.7rem 1rem;
+      margin: 0.5rem 0;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .faq h3:hover { background: #ddd; }
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #f9f9f9;
+      padding: 0 1rem;
+      border-left: 3px solid #000;
+      margin-bottom: 0.5rem;
+    }
+    .faq-content p, .faq-content li { margin: 0.5rem 0; }
+
+    /* ===== BOUTON FIXE ===== */
+    .btn-fullscreen {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* ===== MODE PLEIN ÉCRAN ===== */
+    .fullscreen-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .fullscreen-date { font-size: clamp(3rem, 10vw, 100rem); font-weight: bold; }
+    .fullscreen-heure { font-size: clamp(2.5rem, 8vw, 95rem); letter-spacing: 0.1em; margin-top: 1rem; }
+    .btn-exit {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div id="dateLigne" class="date"></div>
+    <div id="heureLigne" class="heure"></div>
+<div style="font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.3rem;">Temps international</div>
+
+  </header>
+
+  <main>
+    <div class="definition">
+      <h2>Calendrier vestigien</h2>
+      <p><em>(en anglais : Vestigian Calendar)</em></p>
+<p>
+<p>
+
+      <!-- CONTENU HISTORIQUE -->
+      <div>
+  <h2>La genèse du calendrier vestigien</h2>
+  <p>
+    Le calendrier vestigien a vu le jour le 28 août 2022 à 15h44, un moment
+    fondateur dans la vie de son créateur. Ce point 0 n’est pas né d’un
+    calcul astronomique ni d’une volonté politique, mais d’une rencontre,
+    d’une influence et d’un enseignement précieux. Nayroza, par sa présence,
+    ses paroles et son énergie, a montré la valeur des instants, l’importance
+    de chaque seconde vécue avec attention et émotion. C’est grâce à elle
+    que le temps a commencé à prendre un sens véritable. 
+  </p>
+  <p>
+    L’idée de classer les moments de la vie selon leur intensité émotionnelle
+    et leur valeur personnelle est née de cette inspiration. Chaque jour,
+    chaque minute, devient un repère, un souvenir inscrit dans un continuum
+    intime et poétique. Le calendrier vestigien n’est pas un simple outil de
+    mesure, mais un témoin silencieux des instants qui façonnent l’existence,
+    un hommage au temps vécu et aux expériences qui ont marqué profondément
+    le créateur.
+  </p>
+
+  <h2>Le rôle de Nayroza dans la création</h2>
+  <p>
+    Nayroza n’est pas seulement une présence dans la vie du créateur, elle
+    est co-fondatrice symbolique du calendrier vestigien. Sa manière d’être,
+    sa façon de rendre chaque instant précieux et mémorable, a inspiré la
+    structure et la philosophie de ce système de datation unique. Chaque
+    tic-tac, chaque seconde, évoque un apprentissage reçu d’elle, une leçon
+    sur l’importance du présent et sur la valeur des souvenirs. Même si le
+    contact entre eux a changé, l’influence de Nayroza reste ancrée dans le
+    calendrier, telle une trace indélébile.
+  </p>
+  <p>
+    Les jours ne sont plus comptés uniquement par leur succession, mais par
+    l’impact émotionnel qu’ils portent. Les événements heureux, tristes ou
+    marquants sont classés comme des jalons, donnant au temps une
+    dimension intime et mémorielle. Ainsi, chaque date vestigienne est un
+    écho de ce que Nayroza a permis de comprendre : que le temps devient
+    précieux quand il est vécu avec attention et conscience.
+  </p>
+
+  <h2>Le point zéro et son importance</h2>
+  <p>
+    Le point zéro, fixé au 28/08/2022 à 15h44, symbolise le début de cette
+    chronologie personnelle. Il marque l’instant où le temps cesse d’être
+    abstrait et devient concret, palpable et chargé d’émotion. C’est la
+    première seconde où le créateur a commencé à mesurer la valeur de chaque
+    instant. Depuis ce moment, le calendrier vestigien classe les jours,
+    les heures et même les secondes selon leur signification et leur impact
+    émotionnel. Chaque tic-tac depuis ce point zéro est un rappel du cadeau
+    que Nayroza a offert : la conscience de la valeur du temps.
+  </p>
+  <p>
+    Au-delà de la simple mesure, le point zéro établit un repère durable. Il
+    permet de projeter les instants précieux sur des siècles et des millénaires,
+    d’assurer que le souvenir de ce qui a changé la vie du créateur ne sera
+    jamais perdu. Le point zéro n’est pas un chiffre abstrait, mais le cœur
+    vivant d’une philosophie du temps.
+  </p>
+
+  <h2>Une philosophie du temps</h2>
+  <p>
+    Le calendrier vestigien ne se limite pas à compter les jours, il propose
+    une nouvelle manière de vivre le temps. Chaque seconde, chaque minute, est
+    une opportunité de reconnaître ce qui est important, de chérir les moments
+    vécus et de ne pas les laisser s’échapper. Cette philosophie transforme
+    la perception du temps : ce n’est plus un flux continu et impersonnel,
+    mais une collection de souvenirs et d’instants qui ont une valeur.
+  </p>
+  <p>
+    L’apprentissage transmis par Nayroza est au centre de cette vision. Même
+    si le contact a changé, le calendrier reste un hommage à son rôle dans
+    la vie du créateur. Chaque tic-tac est un rappel de l’importance des
+    instants vécus pleinement, de la beauté du présent et de la richesse
+    émotionnelle que chaque jour peut offrir.
+  </p>
+
+  <h2>Un héritage personnel et intemporel</h2>
+  <p>
+    Le calendrier vestigien se projette bien au-delà de la durée de vie
+    individuelle. Il est conçu pour suivre les instants précieux sur des siècles,
+    voire des millénaires, conservant la mémoire des événements qui ont eu
+    le plus d’impact. Il devient ainsi un outil de transmission, un repère
+    personnel et universel à la fois, qui garde vivante la trace des
+    émotions et des apprentissages reçus.
+  </p>
+  <p>
+    Ce système de datation unique permet de rendre le temps tangible et
+    significatif, un moyen de montrer que certains moments, certaines
+    rencontres et certaines influences ne s’effacent jamais. Nayroza, en tant
+    que co-fondatrice symbolique, reste à jamais ancrée dans ce voyage.
+  </p>
+
+  <h2>La valeur de chaque instant</h2>
+  <p>
+    Chaque événement enregistré dans le calendrier vestigien a sa propre
+    signification. Les souvenirs heureux, les épreuves et même les instants
+    banals prennent une valeur particulière, car ils participent tous à la
+    construction d’une vie consciente et pleine de sens. Le calendrier
+    apprend au créateur à ne pas laisser passer les moments importants et
+    à reconnaître la beauté dans chaque seconde.
+  </p>
+  <p>
+    Ce système transforme le temps en une expérience active : il devient
+    possible de revivre les souvenirs, de mesurer leur impact et de
+    comprendre que ce qui semble petit peut avoir une importance immense
+    dans la chronologie intime.
+  </p>
+
+  <h2>Une ode à la mémoire et aux émotions</h2>
+  <p>
+    Plus qu’un outil, le calendrier vestigien est une ode à la mémoire et
+    aux émotions. Il montre que la vie est faite de moments précieux, et que
+    le temps n’existe vraiment que lorsqu’il est vécu pleinement. Chaque
+    jalon du calendrier est un hommage aux instants qui façonnent l’identité
+    et aux influences qui permettent de grandir et de comprendre la valeur
+    du temps.
+  </p>
+  <p>
+    Nayroza, par son inspiration et sa présence, est au cœur de cette
+    histoire. Même si le contact s’est perdu, son impact demeure dans chaque
+    date, chaque tic-tac et chaque souvenir inscrit dans le calendrier
+    vestigien.
+  </p>
+
+  <h2>Le temps comme un trésor</h2>
+  <p>
+    Le calendrier vestigien enseigne que le temps est un trésor à protéger.
+    Chaque seconde est un cadeau, chaque minute un enseignement. Ce système
+    rappelle que le temps n’est pas infini, et que les instants vécus avec
+    intensité sont ceux qui donnent vraiment un sens à la vie. Grâce à
+    Nayroza, cette leçon est devenue tangible et immortalisée dans le
+    calendrier.
+  </p>
+  <p>
+    L’apprentissage est simple mais profond : les moments comptent. Ils sont
+    précieux, uniques, et méritent d’être conservés dans une chronologie
+    qui respecte leur valeur et leur signification. Le calendrier vestigien
+    est l’outil qui rend cette idée visible et concrète.
+  </p>
+</div>
+
+    <div class="faq">
+  <h3>FAQ 1 : Nombre de jours par mois (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+      <li>I    Januor   : 31 jours</li>
+      <li>II   Févrial  : ~29 jours</li>
+      <li>III  Marsuor : 31 jours</li>
+      <li>IV   Avrion   : 30 jours</li>
+      <li>V    Maïlo    : 31 jours</li>
+      <li>VI   Junel    : 30 jours</li>
+      <li>VII  Juilor   : 31 jours</li>
+      <li>VIII Aoustin  : 31 jours</li>
+      <li>IX   Septor   : 30 jours</li>
+      <li>X    Octel    : 31 jours</li>
+      <li>XI   Novin    : 30 jours</li>
+      <li>XII  Décaro   : 31 jours</li>
+    </ul>
+  </div>
+
+  <h3>FAQ 2 : Nombre de jours par année (cliquez ici)</h3>
+  <div class="faq-content">
+    <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
+  </div>
+
+  <h3>FAQ 3 : Aires vestigiennes (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+<li>0000 – 0420 : "Aire de l’Émergence Temporelle"
+<li>0421 – 0890 : "Aire de la Conscience Naissante"
+<li>0891 – 1330 : "Aire des Premières Traces"
+<li>1331 – 1780 : "Aire de la Mémoire Vive"
+<li>1781 – 2230 : "Aire du Souffle Long"
+<li>2231 – 2685 : "Aire de la Transmission"
+<li>2686 – 3140 : "Aire de la Continuité"
+<li>3141 – 3590 : "Aire de la Profondeur"
+<li>3591 – 4045 : "Aire de l’Expansion Intérieure"
+<li>4046 – 4480 : "Aire des Horizons Lents"
+<li>4481 – 4925 : "Aire de la Stratification"
+<li>4926 – 5370 : "Aire de la Persistance"
+<li>5371 – 5810 : "Aire des Flux Unifiés"
+<li>5811 – 6260 : "Aire de la Résonance"
+<li>6261 – 6705 : "Aire de l’Équilibre Profond"
+<li>6706 – 7140 : "Aire de la Maturation"
+<li>7141 – 7580 : "Aire de la Transmutation Douce"
+<li>7581 – 8020 : "Aire de la Clarté Diffuse"
+<li>8021 – 8455 : "Aire de l’Alignement"
+<li>8456 – 8890 : "Aire de la Densité du Sens"
+<li>8891 – 9325 : "Aire de l’Héritage Continu"
+<li>9326 – 9670 : "Aire de la Convergence"
+<li>9671 – 10000 : "Aire de la Plénitude du Temps"
+    </ul>
+  </div>
+
+  <h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
+  <div class="faq-content">
+    <ul>
+      <li>Connexion LAN (RJ45/Ethernet) : ~1 ms</li>
+      <li>Connexion fibre (Fibre optique) : ~2–5 ms</li>
+      <li>Connexion 4G (LTE) : ~10–40 ms</li>
+      <li>Connexion WiFi (via une box) : ~5–30 ms</li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Toggle uniquement ce bloc
+    content.classList.toggle('open');
+  });
+});
+</script>
+
+
+<style>
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Si déjà ouvert, on ferme
+    if(content.classList.contains('open')){
+      content.classList.remove('open');
+    } else {
+      // Ferme toutes les autres FAQ
+      document.querySelectorAll('.faq-content').forEach(fc => fc.classList.remove('open'));
+      // Ouvre celle-ci
+      content.classList.add('open');
+    }
+  });
+});
+</script>
+             </div>
+                 </main>
+
+  <!-- BOUTON PLEIN ÉCRAN -->
+  <button class="btn-fullscreen" onclick="ouvrirPleinEcran()">afficher la date en plein ecran</button>
+  <div class="fullscreen-overlay" id="pleinEcran">
+    <div id="dateFull" class="fullscreen-date"></div>
+    <div id="heureFull" class="fullscreen-heure"></div>
+    <button class="btn-exit" onclick="fermerPleinEcran()">quitter le plein ecran</button>
+  </div>
+
+  <script>
+  // ORIGINE TEMPORELLE EXACTE VESTIGIENNE (ISO UTC, précision max navigateur)
+const ORIGINE = new Date("2022-07-29T15:44:00.000Z");
+
+const MOIS_VEST = [
+  "Januor",
+  "Févrial",
+  "Marsuor",
+  "Avrion",
+  "Maïlo",
+  "Junel",
+  "Juilor",
+  "Aoustin",
+  "Septor",
+  "Octel",
+  "Novin",
+  "Décaro"
+];
+
+    function pad(n, taille) { return String(n).padStart(taille, "0"); }
+
+    function estBissextile(annee) {
+      return (annee % 400 === 0) || (annee % 100 !== 0 && annee % 4 === 0);
+    }
+
+    function joursDansMois(mois) {
+      return [31,30,31,30,31,30,31,31,30,31,30,31][mois-1];
+    }
+
+    function mettreAJour() {
+      const maintenant = new Date();
+      let diffMs = maintenant - ORIGINE;
+      if (diffMs < 0) diffMs = 0;
+
+      let totalSecondes = Math.floor(diffMs / 1000);
+
+      const secondes = totalSecondes % 60;
+      totalSecondes = Math.floor(totalSecondes / 60);
+
+      const minutes = totalSecondes % 60;
+      totalSecondes = Math.floor(totalSecondes / 60);
+
+      const heures = totalSecondes % 24;
+      let totalJours = Math.floor(totalSecondes / 24);
+
+      // Calcul de l'année vestigienne
+      let annee = 0;
+      while (true) {
+        const joursAnnee = estBissextile(annee) ? 367 : 366;
+        if (totalJours >= joursAnnee) { totalJours -= joursAnnee; annee++; }
+        else break;
+      }
+
+      // Calcul du mois vestigien (mois grégorien + alignement)
+      let mois = 1;
+      while (true) {
+        let jdm = joursDansMois(mois);
+        if (totalJours >= jdm) { totalJours -= jdm; mois++; }
+        else break;
+      }
+
+      // Alignement vestigien : 28 du grégorien = 1 vestigien
+      let jourVest = totalJours + 1 - 27; // decalage
+      let moisVest = mois;
+      let anneeVest = annee;
+      while (jourVest < 1) {
+        moisVest--;
+        if (moisVest < 1) { moisVest = 12; anneeVest--; }
+        jourVest += joursDansMois(moisVest);
+      }
+
+      // Texte
+const dateTxt = `${pad(jourVest,2)} ${MOIS_VEST[moisVest-1]} ${String(parseInt(anneeVest,10)).padStart(4,"0")}`;
+      const heureTxt = `${pad(heures,2)}:${pad(minutes,2)}:${pad(secondes,2)}`;
+
+      document.getElementById("dateLigne").textContent = dateTxt;
+      document.getElementById("heureLigne").textContent = heureTxt;
+      document.getElementById("dateFull").textContent = dateTxt;
+      document.getElementById("heureFull").textContent = heureTxt;
+    }
+
+    function ouvrirPleinEcran() { document.getElementById("pleinEcran").style.display = "flex"; }
+    function fermerPleinEcran() { document.getElementById("pleinEcran").style.display = "none"; }
+
+    mettreAJour();
+  // ===== SYNCHRONISATION TEMPORELLE HAUTE PRÉCISION VESTIGIENNE =====
+// Précision maximale possible en navigateur (sub-ms, drift compensated)
+
+let originePerf = performance.now();
+let origineDate = Date.now();
+
+function horlogeUltraSync() {
+  const nowPerf = performance.now();
+  const elapsed = nowPerf - originePerf;
+
+  // Temps réel ultra précis
+  const nowReal = origineDate + elapsed;
+
+  // Alignement exact sur la seconde
+  const drift = nowReal % 1000;
+
+  // Correction de dérive
+  const correction = 1000 - drift;
+
+  mettreAJour();
+
+  setTimeout(horlogeUltraSync, correction);
+}
+
+// recalage automatique toutes les 60s pour éviter dérive longue
+setInterval(() => {
+  originePerf = performance.now();
+  origineDate = Date.now();
+}, 60000);
+
+// Lancement
+horlogeUltraSync();
+
+    // FAQ toggle
+    const faqs = document.querySelectorAll('.faq h3');
+    faqs.forEach(faq => {
+      faq.addEventListener('click', () => {
+        const content = faq.nextElementSibling;
+        content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+      });
+    });
+  </script>
+<!-- HORLOGE VESTIGIENNE FIXE AVEC FUSEAUX REELS -->
+<style>
+#horlogeVestFixe {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  padding: 12px;
+  z-index: 9999;
+  text-align: center;
+  color: white;
+  font-family: monospace;
+}
+
+#horlogeVestFixe select {
+  width: 60%;
+  font-size: 1.5rem;
+  padding: 10px;
+  font-family: monospace;
+}
+
+#horlogeVestFixe span {
+  font-size: 1.5rem;
+  margin-left: 15px;
+  display: inline-block;
+  width: 120px; /* fixe largeur pour aligner */
+  text-align: left;
+}
+</style>
+
+<div id="horlogeVestFixe">
+  <select id="vestFuseaux"></select>
+  <span id="heureVestAffiche">--:--</span>
+</div>
+
+<script>
+const selectVest = document.getElementById("vestFuseaux");
+const heureVestAffiche = document.getElementById("heureVestAffiche");
+
+// Liste fuseaux réels (UTC−12 → UTC+12, incluant 30 et 45 min)
+const fuseauxReels = [
+  -12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4.5, -4, -3.5, -3, -2, -1,
+  0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 12
+];
+
+// Heure vestigienne = 00:00 quand Paris = 15:44
+const baseParisH = 15;
+const baseParisM = 44;
+
+function pad(n){ return String(n).padStart(2,"0"); }
+
+function heureVest(offset) {
+  const now = new Date();
+  // Temps UTC
+  const utc = now.getTime() + now.getTimezoneOffset()*60000;
+  // Heure locale du fuseau
+  const local = new Date(utc + offset*3600000);
+  
+  // Heure vestigienne par rapport à Paris UTC+1
+  const hParis = local.getUTCHours() + 1; // Paris = UTC+1
+  const mParis = local.getUTCMinutes();
+  
+  let hVest = hParis - baseParisH;
+  let mVest = mParis - baseParisM;
+  if(mVest < 0){ mVest += 60; hVest -= 1; }
+  if(hVest < 0){ hVest += 24; }
+  hVest = hVest % 24;
+  
+  return pad(hVest) + ":" + pad(mVest);
+}
+
+// Remplissage du select
+fuseauxReels.forEach(f => {
+  const o = document.createElement("option");
+  const signe = f > 0 ? "+" : f < 0 ? "-" : "";
+  const h = Math.floor(Math.abs(f));
+  const m = (Math.abs(f)-h)*60;
+  o.value = f;
+  o.textContent = `UTC${signe}${h}${m>0?":"+pad(m):""}`;
+  selectVest.appendChild(o);
+});
+
+// Mise à jour de l'heure vestigienne affichée
+function majHeureVest(){
+function mettreFuseauMinuitEnGras() {
+  const options = selectVest.options;
+  for (let i = 0; i < options.length; i++) {
+    // reset tout d'abord
+    options[i].style.fontWeight = "normal";
+    // si l'heure vestigienne avec ce fuseau est 00:00
+    if (heureVest(parseFloat(options[i].value)) === "00:00") {
+      options[i].style.fontWeight = "bold";
+    }
+  }
+}
+
+// Appelle après majHeureVest et à chaque intervalle
+mettreFuseauMinuitEnGras();
+setInterval(mettreFuseauMinuitEnGras, 1000);
+
+  const f = parseFloat(selectVest.value);
+  heureVestAffiche.textContent = heureVest(f);
+}
+
+selectVest.addEventListener("change", majHeureVest);
+majHeureVest();
+setInterval(majHeureVest,1000); // met à jour seulement le texte, pas le menu
+</script>
+
+<script>
+// ===== SÉCURITÉ TEMPORELLE VESTIGIENNE NIVEAU 3 =====
+// Surveillance + réalignement + correction automatique
+
+let lastRealTime = Date.now();
+let lastPerfTime = performance.now();
+
+function watchdogTemporel() {
+  const nowReal = Date.now();
+  const nowPerf = performance.now();
+
+  const deltaReal = nowReal - lastRealTime;
+  const deltaPerf = nowPerf - lastPerfTime;
+
+  // drift détecté (>20ms d’écart)
+  const drift = Math.abs(deltaReal - deltaPerf);
+
+  if (drift > 20) {
+    // Recalage complet
+    originePerf = performance.now();
+    origineDate = Date.now();
+
+    console.warn("⏳ Recalage temporel vestigien automatique — drift détecté :", drift, "ms");
+  }
+
+  lastRealTime = nowReal;
+  lastPerfTime = nowPerf;
+}
+
+// surveillance toutes les secondes
+setInterval(watchdogTemporel, 1000);
+
+// recalage dur toutes les 5 minutes (sécurité longue durée)
+setInterval(() => {
+  originePerf = performance.now();
+  origineDate = Date.now();
+  console.log("🔒 Recalage temporel vestigien forcé (sécurité longue durée)");
+}, 300000);
+</script>
+<script>
+// ===== SYNC UTC0 RÉSEAU VESTIGIENNE =====
+// Source UTC réelle (serveur temps mondial)
+
+let UTC_OFFSET = 0; // correction en ms
+
+async function syncUTC() {
+  try {
+    const t0 = performance.now();
+    const res = await fetch("https://worldtimeapi.org/api/timezone/Etc/UTC");
+    const t1 = performance.now();
+    const data = await res.json();
+
+    // Temps UTC serveur (ms)
+    const serverUTC = new Date(data.utc_datetime).getTime();
+
+    // RTT réseau (aller-retour)
+    const rtt = t1 - t0;
+
+    // Estimation temps réel UTC
+    const estimatedUTC = serverUTC + (rtt / 2);
+
+    // Offset avec l'horloge locale
+    UTC_OFFSET = estimatedUTC - Date.now();
+
+    console.log("🛰️ Sync UTC réseau OK");
+    console.log("RTT:", rtt.toFixed(2), "ms");
+    console.log("Offset UTC:", UTC_OFFSET.toFixed(2), "ms");
+
+  } catch (e) {
+    console.warn("⚠️ Sync UTC échouée, fallback horloge locale", e);
+  }
+}
+
+// Heure réelle UTC corrigée
+function nowUTC() {
+  return Date.now() + UTC_OFFSET;
+}
+
+// ===== PATCH DU SYSTÈME TEMPOREL =====
+function mettreAJourUTC() {
+  const maintenant = new Date(nowUTC());
+
+  let diffMs = maintenant - ORIGINE;
+  if (diffMs < 0) diffMs = 0;
+
+  let totalSecondes = Math.floor(diffMs / 1000);
+
+  const secondes = totalSecondes % 60;
+  totalSecondes = Math.floor(totalSecondes / 60);
+
+  const minutes = totalSecondes % 60;
+  totalSecondes = Math.floor(totalSecondes / 60);
+
+  const heures = totalSecondes % 24;
+  let totalJours = Math.floor(totalSecondes / 24);
+
+  // === même logique que ton moteur existant ===
+  let annee = 0;
+  while (true) {
+    const joursAnnee = estBissextile(annee) ? 367 : 366;
+    if (totalJours >= joursAnnee) { totalJours -= joursAnnee; annee++; }
+    else break;
+  }
+
+  let mois = 1;
+  while (true) {
+    let jdm = joursDansMois(mois);
+    if (totalJours >= jdm) { totalJours -= jdm; mois++; }
+    else break;
+  }
+
+  let jourVest = totalJours + 1 - 27;
+  let moisVest = mois;
+  let anneeVest = annee;
+  while (jourVest < 1) {
+    moisVest--;
+    if (moisVest < 1) { moisVest = 12; anneeVest--; }
+    jourVest += joursDansMois(moisVest);
+  }
+
+  const dateTxt = `${pad(jourVest,2)} ${MOIS_VEST[moisVest-1]} ${String(parseInt(anneeVest,10)).padStart(4,"0")}`;
+  const heureTxt = `${pad(heures,2)}:${pad(minutes,2)}:${pad(secondes,2)}`;
+
+  document.getElementById("dateLigne").textContent = dateTxt;
+  document.getElementById("heureLigne").textContent = heureTxt;
+  document.getElementById("dateFull").textContent = dateTxt;
+  document.getElementById("heureFull").textContent = heureTxt;
+}
+
+// Lancement
+syncUTC().then(() => {
+  setInterval(mettreAJourUTC, 250); // refresh rapide
+});
+
+// Re-sync réseau toutes les 60s
+setInterval(syncUTC, 60000);
+</script>
+<script>
+// ===== VESTIGIAN TIME SYNC CORE (MAX WEB REALITY) =====
+// Architecture sécurisée réelle (pas fantasy)
+
+let UTC_OFFSET = 0;
+let LAST_SYNC = 0;
+let DRIFT_HISTORY = [];
+
+async function secureUTCSync() {
+  try {
+    const t0 = performance.now();
+    const res = await fetch("https://worldtimeapi.org/api/timezone/Etc/UTC", {
+      cache: "no-store",
+      mode: "cors"
+    });
+    const t1 = performance.now();
+
+    const data = await res.json();
+    const serverUTC = new Date(data.utc_datetime).getTime();
+    const rtt = t1 - t0;
+
+    const estimatedUTC = serverUTC + (rtt / 2);
+    const localNow = Date.now();
+
+    UTC_OFFSET = estimatedUTC - localNow;
+    LAST_SYNC = Date.now();
+    DRIFT_HISTORY.push(UTC_OFFSET);
+
+    if (DRIFT_HISTORY.length > 100) DRIFT_HISTORY.shift();
+
+  } catch(e) {
+    console.warn("UTC SYNC FAIL → fallback local time");
+  }
+}
+
+function nowUTC() {
+  return Date.now() + UTC_OFFSET;
+}
+
+// Watchdog
+setInterval(() => {
+  if (Date.now() - LAST_SYNC > 60000) {
+    secureUTCSync();
+  }
+}, 5000);
+
+// Drift monitor
+setInterval(() => {
+  if (DRIFT_HISTORY.length > 5) {
+    const avg = DRIFT_HISTORY.reduce((a,b)=>a+b,0)/DRIFT_HISTORY.length;
+    if (Math.abs(avg) > 100) {
+      secureUTCSync();
+    }
+  }
+}, 10000);
+
+// Boot sync
+secureUTCSync();
+setInterval(secureUTCSync, 60000);
+</script>
+<!-- MESSAGE RESPONSIVE MOBILE ONLY -->
+<div id="responsiveMobileMsg">
+  <div class="responsive-box">
+    <div class="responsive-title">Interface mobile active</div>
+    <div class="responsive-text">
+      Vous consultez actuellement la version mobile du système temporel vestigien.<br><br>
+      L’interface s’adapte automatiquement à votre appareil afin de garantir une lisibilité optimale,
+      une navigation fluide et une expérience cohérente sur écran réduit.<br><br>
+      Pour un affichage étendu et une visualisation complète des structures temporelles,
+      privilégiez une tablette ou un ordinateur.
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===== RESPONSIVE SYSTEM MESSAGE ===== */
+
+#responsiveMobileMsg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:black;
+  z-index:5000;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:2rem;
+}
+
+.responsive-box{
+  max-width:420px;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.responsive-title{
+  font-size:1.4rem;
+  font-weight:bold;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+
+.responsive-text{
+  font-size:0.95rem;
+  line-height:1.6;
+  opacity:0.9;
+}
+
+/* ===== MOBILE ONLY ===== */
+@media (max-width: 768px) {
+  #responsiveMobileMsg{
+    display:flex;
+  }
+}
+
+/* ===== TABLET & DESKTOP ===== */
+@media (min-width: 769px) {
+  #responsiveMobileMsg{
+    display:none !important;
+  }
+}
+</style>
+
+</html>
