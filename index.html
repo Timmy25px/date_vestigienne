@@ -127,8 +127,52 @@
     }
   </style>
 </head>
+</div>
+<script>
+function isMobileDevice() {
+  return /Android|iPhone|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
+}
 
+function isSmallScreen() {
+  return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+}
+
+function checkDisplay() {
+  const blocker = document.getElementById("mobile-blocker");
+
+  if (isMobileDevice() && isSmallScreen()) {
+    blocker.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  } else {
+    blocker.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+}
+
+window.addEventListener("load", checkDisplay);
+window.addEventListener("resize", checkDisplay);
+</script>
 <body>
+<!-- BLOQUEUR MOBILE -->
+<div id="mobile-blocker">
+  <div class="mobile-box">
+    <h1>Affichage non compatible 📱</h1>
+    <p>
+      Ce site n’est pas optimisé pour les écrans au format mobile (9:16).<br><br>
+      L’interface nécessite une surface d’affichage plus large pour garantir
+      une lecture correcte, une structure stable et une expérience fluide.
+    </p>
+
+    <p class="sub">
+      ➜ Accès recommandé depuis un ordinateur ou une tablette.
+    </p>
+
+    <div class="signature">
+      Système d’affichage adaptatif actif.
+    </div>
+  </div>
+</div>
+
   <header>
     <div id="dateLigne" class="date"></div>
     <div id="heureLigne" class="heure"></div>
@@ -587,6 +631,55 @@
 </div>
 
 <style>
+#mobile-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0a;
+  color: white;
+  z-index: 999999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.mobile-box {
+  max-width: 420px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+}
+
+.mobile-box h1 {
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.mobile-box p {
+  font-size: 1em;
+  line-height: 1.5em;
+  opacity: 0.9;
+}
+
+.mobile-box .sub {
+  margin-top: 15px;
+  font-size: 0.95em;
+  opacity: 0.7;
+}
+
+.mobile-box .signature {
+  margin-top: 20px;
+  font-size: 0.75em;
+  opacity: 0.4;
+  letter-spacing: 1px;
+}
 .faq h3 {
   cursor: pointer;
   background: #eee;
@@ -1379,6 +1472,7 @@ window.addEventListener("resize", showResponsiveMessage);
     </div>
   </div>
 </div>
+
 
 
 </html>
