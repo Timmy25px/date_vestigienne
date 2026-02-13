@@ -406,19 +406,42 @@ while (current <= total) {
   </div>
 </div>
 <div class="video-vestigien">
-  <h3><em>Vidéo</em> : Merci Nayroza (audio officiel)</h3>
-  
-  <video controls width="100%" poster="" style="border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+ <div class="video-section">
+  <h3><strong>Vidéo</strong> : Merci Nayroza (audio officiel)</h3>
+  <p class="video-desc">
+    Même si le contact a changé avec le temps, nous gardons la gratitude intacte.<br>
+    Chaque instant partagé et chaque souvenir restent précieux dans notre conscience du temps.
+  </p>
+  <video controls width="100%" style="max-width:720px; border-radius:8px;">
     <source src="merci-nayroza.mp4" type="video/mp4">
     Votre navigateur ne supporte pas la lecture de vidéos.
   </video>
-  
-  <p class="video-description">
-    Même si le contact a changé, je tiens à remercier Nayroza pour tout le temps partagé.<br>
-    Chaque instant compte, et la conscience du temps reste un trésor précieux à préserver.
-  </p>
 </div>
 
+<style>
+.video-section {
+  margin: 2rem 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.video-section h3 {
+  font-size: 1.4em;
+  margin-bottom: 0.5rem;
+}
+
+.video-section .video-desc {
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.video-section video {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+</style>
 <style>
 .video-vestigien {
   margin: 2rem 0;
