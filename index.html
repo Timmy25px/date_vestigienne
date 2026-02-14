@@ -151,6 +151,70 @@ function checkDisplay() {
 
 window.addEventListener("load", checkDisplay);
 window.addEventListener("resize", checkDisplay);
+<script>
+// ===== AJOUT JOUR SEMAINE (01/01/0000 = dimanche) =====
+
+const JOURS = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+
+// crée le petit affichage à côté de la date si pas déjà présent
+(function(){
+  const dateDiv = document.getElementById("dateLigne");
+  if(!dateDiv) return;
+
+  const span = document.createElement("span");
+  span.id = "jourMini";
+  span.style.fontSize = "0.35em";
+  span.style.marginLeft = "10px";
+  span.style.fontWeight = "normal";
+  span.style.opacity = "0.8";
+
+  dateDiv.appendChild(span);
+})();
+
+// fonction pour convertir une date vestigienne -> jour semaine
+function jourSemaineVestigien(jour, mois, annee){
+
+  // nombre total de jours depuis 01/01/0000
+  let total = jour - 1;
+
+  // ajoute jours des mois précédents
+  for(let m=1;m<mois;m++){
+    total += joursDansMois(m);
+  }
+
+  // ajoute jours des années précédentes
+  for(let a=0;a<annee;a++){
+    total += estBissextile(a) ? 367 : 366;
+  }
+
+  // modulo 7 → dimanche index 0
+  return JOURS[ total % 7 ];
+}
+
+
+// PATCH : injecte dans ta fonction mettreAJour()
+const _oldMettreAJour = mettreAJour;
+mettreAJour = function(){
+
+  _oldMettreAJour();
+
+  // récupère la date affichée (ex: "12 Maïlo 3")
+  const txt = document.getElementById("dateLigne").innerText;
+  const parts = txt.split(" ");
+
+  if(parts.length >= 3){
+    const jour = parseInt(parts[0]);
+    const mois = MOIS_VEST.indexOf(parts[1]) + 1;
+    const annee = parseInt(parts[2]);
+
+    if(jour && mois && !isNaN(annee)){
+      const j = jourSemaineVestigien(jour,mois,annee);
+      const mini = document.getElementById("jourMini");
+      if(mini) mini.textContent = j;
+    }
+  }
+};
+</script>
 </script>
 <body>
 <!-- BLOQUEUR MOBILE -->
