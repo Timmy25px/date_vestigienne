@@ -1,6 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
+<style>
+<style>
+/* Pour le tableau existant */
+table {
+  text-transform: none !important;
+}
+table th,
+table td {
+  text-transform: none !important;
+}
+
+/* Pour tous les menus déroulants */
+select, option {
+  text-transform: none !important;
+}
+</style>
 <head>
+<style>
+/* Tout ce qui est dans le bloc FAQ */
+.faq {
+  text-transform: none !important; /* empêche les majuscules globales */
+  font-weight: normal !important;   /* enlève le gras global */
+}
+
+/* Les titres h3 dans FAQ restent normaux */
+.faq h3 {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+
+/* Les paragraphes et listes à l’intérieur */
+.faq p, .faq li {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+
+/* Si tu as des menus déroulants (select/options) dans ce bloc */
+.faq select, .faq option {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+</style>
   <meta charset="UTF-8">
   <title>Vestigian Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -376,41 +417,189 @@ mettreAJour = function(){
   Ce système rend visible l’idée que chaque instant compte. 
   Le calendrier est un outil concret pour célébrer la valeur du temps.
 </p>
+<h2>Le calendrier vestigien se déplace et se décale par rapport à début de l'année qui est basé initialement le 28 août</h2>
+<p>Ça fait ça jusqu'à ce que le vestigien se recale sur le 28 août grégorien. C'est ce qu'on appelle un cycle vestigien de 400 Ans</p>
 
-    <div class="faq">
-  <h3>FAQ 1 : Nombre de jours par mois (cliquez ici)</h3>
-  <div class="faq-content">
-    <ul>
-      <li>I    Januor   : 31 jours</li>
-      <li>II   Févrial  : ~29 jours</li>
-      <li>III  Marsuor : 31 jours</li>
-      <li>IV   Avrion   : 30 jours</li>
-      <li>V    Maïlo    : 31 jours</li>
-      <li>VI   Junel    : 30 jours</li>
-      <li>VII  Juilor   : 31 jours</li>
-      <li>VIII Aoustin  : 31 jours</li>
-      <li>IX   Septor   : 30 jours</li>
-      <li>X    Octel    : 31 jours</li>
-      <li>XI   Novin    : 30 jours</li>
-      <li>XII  Décaro   : 31 jours</li>
-    </ul>
-  </div>
+<table border="1" cellspacing="0" cellpadding="4">
+<tr>
+  <th>Année Grégorienne</th>
+  <th>Bissextile Grég. ?</th>
+  <th>Année vestigienne bissextile ?</th>
+  <th>1er Januor vestigien</th>
+  <th>Décalage cumulé</th>
+</tr>
+<tr><td>2022</td><td>Non</td><td>Non</td><td>28/08</td><td>0</td></tr>
+<tr><td>2023</td><td>Non</td><td>Non</td><td>28/08</td><td>0</td></tr>
+<tr><td>2024</td><td>Oui</td><td>Non</td><td>27/08</td><td>-1</td></tr>
+<tr><td>2025</td><td>Non</td><td>Non</td><td>27/08</td><td>0</td></tr>
+<tr><td>2026</td><td>Non</td><td>Oui</td><td>28/08</td><td>+1</td></tr>
+<tr><td>2027</td><td>Non</td><td>Non</td><td>27/08</td><td>0</td></tr>
+<tr><td>2028</td><td>Oui</td><td>Non</td><td>26/08</td><td>-1</td></tr>
+<tr><td>2029</td><td>Non</td><td>Non</td><td>26/08</td><td>0</td></tr>
+<tr><td>2030</td><td>Non</td><td>Oui</td><td>27/08</td><td>+1</td></tr>
+<tr><td>2031</td><td>Non</td><td>Non</td><td>26/08</td><td>0</td></tr>
+<tr><td>2032</td><td>Oui</td><td>Non</td><td>25/08</td><td>-1</td></tr>
+<tr><td>2033</td><td>Non</td><td>Non</td><td>25/08</td><td>0</td></tr>
+<tr><td>2034</td><td>Non</td><td>Oui</td><td>26/08</td><td>+1</td></tr>
+<tr><td>2035</td><td>Non</td><td>Non</td><td>25/08</td><td>0</td></tr>
+<tr><td>2036</td><td>Oui</td><td>Non</td><td>24/08</td><td>-1</td></tr>
+<tr><td>2037</td><td>Non</td><td>Non</td><td>24/08</td><td>0</td></tr>
+<tr><td>2038</td><td>Non</td><td>Oui</td><td>25/08</td><td>+1</td></tr>
+<tr><td>2039</td><td>Non</td><td>Non</td><td>24/08</td><td>0</td></tr>
+<tr><td>2040</td><td>Oui</td><td>Non</td><td>23/08</td><td>-1</td></tr>
+<tr><td>2041</td><td>Non</td><td>Non</td><td>23/08</td><td>0</td></tr>
+<tr><td>2042</td><td>Non</td><td>Oui</td><td>24/08</td><td>+1</td></tr>
+<tr><td>2043</td><td>Non</td><td>Non</td><td>23/08</td><td>0</td></tr>
+<tr><td>2044</td><td>Oui</td><td>Non</td><td>22/08</td><td>-1</td></tr>
+<tr><td>2045</td><td>Non</td><td>Non</td><td>22/08</td><td>0</td></tr>
+<tr><td>2046</td><td>Non</td><td>Oui</td><td>23/08</td><td>+1</td></tr>
+<tr><td>2047</td><td>Non</td><td>Non</td><td>22/08</td><td>0</td></tr>
+<tr><td>2048</td><td>Oui</td><td>Non</td><td>21/08</td><td>-1</td></tr>
+<tr><td>2049</td><td>Non</td><td>Non</td><td>21/08</td><td>0</td></tr>
+<tr><td>2050</td><td>Non</td><td>Oui</td><td>22/08</td><td>+1</td></tr>
+<tr><td>2051</td><td>Non</td><td>Non</td><td>21/08</td><td>0</td></tr>
+<tr><td>2052</td><td>Oui</td><td>Non</td><td>20/08</td><td>-1</td></tr>
+<tr><td>2053</td><td>Non</td><td>Non</td><td>20/08</td><td>0</td></tr>
+<tr><td>2054</td><td>Non</td><td>Oui</td><td>21/08</td><td>+1</td></tr>
+<tr><td>2055</td><td>Non</td><td>Non</td><td>20/08</td><td>0</td></tr>
+<tr><td>2056</td><td>Oui</td><td>Non</td><td>19/08</td><td>-1</td></tr>
+<tr><td>2057</td><td>Non</td><td>Non</td><td>19/08</td><td>0</td></tr>
+<tr><td>2058</td><td>Non</td><td>Oui</td><td>20/08</td><td>+1</td></tr>
+<tr><td>2059</td><td>Non</td><td>Non</td><td>19/08</td><td>0</td></tr>
+<tr><td>2060</td><td>Oui</td><td>Non</td><td>18/08</td><td>-1</td></tr>
+<tr><td>2061</td><td>Non</td><td>Non</td><td>18/08</td><td>0</td></tr>
+<tr><td>2062</td><td>Non</td><td>Oui</td><td>19/08</td><td>+1</td></tr>
+<tr><td>2063</td><td>Non</td><td>Non</td><td>18/08</td><td>0</td></tr>
+<tr><td>2064</td><td>Oui</td><td>Non</td><td>17/08</td><td>-1</td></tr>
+<tr><td>2065</td><td>Non</td><td>Non</td><td>17/08</td><td>0</td></tr>
+<tr><td>2066</td><td>Non</td><td>Oui</td><td>18/08</td><td>+1</td></tr>
+<tr><td>2067</td><td>Non</td><td>Non</td><td>17/08</td><td>0</td></tr>
+<tr><td>2068</td><td>Oui</td><td>Non</td><td>16/08</td><td>-1</td></tr>
+<tr><td>2069</td><td>Non</td><td>Non</td><td>16/08</td><td>0</td></tr>
+<tr><td>2070</td><td>Non</td><td>Oui</td><td>17/08</td><td>+1</td></tr>
+<tr><td>2071</td><td>Non</td><td>Non</td><td>16/08</td><td>0</td></tr>
+<tr><td>2072</td><td>Oui</td><td>Non</td><td>15/08</td><td>-1</td></tr>
+</table>
 
-  <h3>FAQ 2 : Nombre de jours par année (cliquez ici)</h3>
-  <div class="faq-content">
-    <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
-  </div>
+<style>
+/* Style FAQ accordéon */
+.faq-content {
+  display: none; /* caché par défaut */
+  margin-left: 20px;
+}
+.faq-content ul {
+  padding-left: 20px;
+}
+.faq h3 {
+  cursor: pointer;
+  user-select: none;
+}
+.faq h3:hover {
+  color: #0077cc;
+}
+</style>
 
-  <h3>FAQ 3 : Aires vestigiennes (cliquez ici)</h3>
-  <div class="faq-content">
-    <ul>
-<ul id="aires"></ul>
+<div class="faq">
+
+<h3>FAQ 1 : Nombre de jours par mois (cliquez ici)</h3> 
+<div class="faq-content">
+  <ul>
+    <li>I    Januor   : 31 jours</li>
+    <li>II   Févrial  : ~29 jours</li>
+    <li>III  Marsuor : 31 jours</li>
+    <li>IV   Avrion   : 30 jours</li>
+    <li>V    Maïlo    : 31 jours</li>
+    <li>VI   Junel    : 30 jours</li>
+    <li>VII  Juilor   : 31 jours</li>
+    <li>VIII Aoustin  : 31 jours</li>
+    <li>IX   Septor   : 30 jours</li>
+    <li>X    Octel    : 31 jours</li>
+    <li>XI   Novin    : 30 jours</li>
+    <li>XII  Décaro   : 31 jours</li>
+  </ul>
+</div>
+
+<h3>FAQ 2 : Nombre de jours par année (cliquez ici)</h3>
+<div class="faq-content">
+  <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
+</div>
+
+<h3>FAQ 3 : Aires vestigiennes (cliquez ici)</h3>
+<div class="faq-content">
+  <ul id="aires"></ul>
+  <script>
+  // Total d'années
+  const total = 1000000;
+
+  // Préfixes et suffixes pour noms d'aires
+  const prefixes = ["Émergence","Conscience","Mémoire","Souffle","Horizon","Résonance","Transmutation","Clarté","Alignement","Plénitude","Aurore","Expansion","Stratification","Équilibre","Maturation","Héritage","Convergence","Profondeur","Transmission","Mutation"];
+  const suffixes = ["Originelle","Silencieuse","Cosmique","Ancestrale","Éternelle","Vibrante","Infinie","Sacrée","Suspendue","Luminale","Primordiale","Céleste","Diffuse","Radiante","Souterraine","Harmonieuse","Unifiée","Évolutive","Fondatrice","Transcendante"];
+
+  const ul = document.getElementById("aires");
+  let current = 0;
+  let i = 0;
+
+  // Fonction pour générer durée 100-200 ans (fixe par index pour stabilité)
+  function dureeVariable(index) {
+    return 100 + (index * 37 % 101); // 100 à 200 ans, stable
+  }
+
+  function articleFrancais(suffix) {
+    return "de la"; // tous féminins
+  }
+
+  // Génération dynamique
+  while (current <= total) {
+    let duree = dureeVariable(i);
+    let fin = Math.min(current + duree, total);
+
+    const prefix = prefixes[i % prefixes.length];
+    const suffix = suffixes[Math.floor(i / prefixes.length) % suffixes.length];
+    const art = articleFrancais(suffix);
+
+    const li = document.createElement("li");
+    li.textContent = `${current} – ${fin} : Aire ${art} ${prefix} ${suffix}`;
+    ul.appendChild(li);
+
+    current = fin + 1;
+    i++;
+  }
+  </script>
+</div>
+
+<h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
+<div class="faq-content">
+  <ul>
+    <li>Connexion LAN (RJ45/Ethernet) : ~1 ms</li>
+    <li>Connexion fibre (Fibre optique) : ~2–5 ms</li>
+    <li>Connexion 4G (LTE) : ~10–40 ms</li>
+    <li>Connexion WiFi (via une box) : ~5–30 ms</li>
+  </ul>
+</div>
 
 <script>
-// Total d'années
-const total = 1000000;
+// Script pour faire fonctionner les FAQ accordéon
+document.querySelectorAll('.faq h3').forEach(h3 => {
+  h3.addEventListener('click', () => {
+    const content = h3.nextElementSibling;
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  });
+});
+</script>
 
-// Préfixes et suffixes pour noms d'aires
+</div>
+
+<script>
+// Accordéon FAQ
+document.querySelectorAll('.faq-title').forEach(title => {
+  title.addEventListener('click', () => {
+    const content = title.nextElementSibling;
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  });
+});
+
+// Génération dynamique des aires vestigiennes
+const total = 1000000;
 const prefixes = ["Émergence","Conscience","Mémoire","Souffle","Horizon","Résonance","Transmutation","Clarté","Alignement","Plénitude","Aurore","Expansion","Stratification","Équilibre","Maturation","Héritage","Convergence","Profondeur","Transmission","Mutation"];
 const suffixes = ["Originelle","Silencieuse","Cosmique","Ancestrale","Éternelle","Vibrante","Infinie","Sacrée","Suspendue","Luminale","Primordiale","Céleste","Diffuse","Radiante","Souterraine","Harmonieuse","Unifiée","Évolutive","Fondatrice","Transcendante"];
 
@@ -418,40 +607,31 @@ const ul = document.getElementById("aires");
 let current = 0;
 let i = 0;
 
-// Fonction pour générer durée 100-200 ans
-function dureeVariable() {
-  return Math.floor(Math.random() * 101) + 100; // 100 à 200
+function dureeVariable(index) {
+  return 100 + (index * 37 % 101); // 100 à 200 ans
 }
 
-// Génération dynamique jusqu'à 1 000 000
+function articleFrancais(suffix) {
+  return "de la"; // tous féminins
+}
+
 while (current <= total) {
-  let duree = dureeVariable();
+  let duree = dureeVariable(i);
   let fin = Math.min(current + duree, total);
 
   const prefix = prefixes[i % prefixes.length];
   const suffix = suffixes[Math.floor(i / prefixes.length) % suffixes.length];
+  const art = articleFrancais(suffix);
 
   const li = document.createElement("li");
-  li.textContent = `${current} – ${fin} : Aire de la ${prefix} ${suffix}`;
+  li.textContent = `${current} – ${fin} : Aire ${art} ${prefix} ${suffix}`;
   ul.appendChild(li);
 
   current = fin + 1;
   i++;
 }
 </script>
- </ul>
-  </div>
 
-  <h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
-  <div class="faq-content">
-    <ul>
-      <li>Connexion LAN (RJ45/Ethernet) : ~1 ms</li>
-      <li>Connexion fibre (Fibre optique) : ~2–5 ms</li>
-      <li>Connexion 4G (LTE) : ~10–40 ms</li>
-      <li>Connexion WiFi (via une box) : ~5–30 ms</li>
-    </ul>
-  </div>
-</div>
 <h2>Calendrier visuel vestigien :</h2>
 <div style="width:100%; height:600px; border:1px solid #ccc;">
   <embed src="An-3-4-vestigien.pdf" type="application/pdf" width="100%" height="100%">
@@ -1523,3 +1703,91 @@ Nouveau bloc ici :
     color: black;
     border: none;
     font-weight: bold;
+<script>
+<script>
+/* ============================
+   CALENDRIER VESTIGIEN
+   VERSION 0 DERIVE
+   ============================ */
+
+function isGregorianLeap(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+}
+
+// Le vestigien copie EXACTEMENT la règle grégorienne
+function isVestigienLeap(vestYear) {
+    // On convertit l'année vestigienne en année grégorienne équivalente
+    // Point 0 = 28/08/2022 = 01/01/0000 vest.
+    const gregYear = 2022 + vestYear;
+    return isGregorianLeap(gregYear);
+}
+
+const vestMonths = [
+    { name: "Januor", days: 31 },
+    { name: "Févrial", days: 28 }, // +1 si bissextile
+    { name: "Marsuor", days: 31 },
+    { name: "Avrilon", days: 30 },
+    { name: "Maïlo", days: 31 },
+    { name: "Junel", days: 30 },
+    { name: "Juilor", days: 31 },
+    { name: "Aoustin", days: 31 },
+    { name: "Septor", days: 30 },
+    { name: "Octel", days: 31 },
+    { name: "Novin", days: 30 },
+    { name: "Décaro", days: 31 }
+];
+
+function getVestigienDate(gregDate) {
+    const baseDate = new Date(2022, 7, 28); // 28 août 2022 (mois 7 = août)
+    let diffDays = Math.floor((gregDate - baseDate) / (1000 * 60 * 60 * 24));
+
+    let vestYear = 0;
+
+    while (true) {
+        let daysInYear = isVestigienLeap(vestYear) ? 366 : 365;
+        if (diffDays >= daysInYear) {
+            diffDays -= daysInYear;
+            vestYear++;
+        } else if (diffDays < 0) {
+            vestYear--;
+            daysInYear = isVestigienLeap(vestYear) ? 366 : 365;
+            diffDays += daysInYear;
+        } else {
+            break;
+        }
+    }
+
+    let monthIndex = 0;
+    while (true) {
+        let daysInMonth = vestMonths[monthIndex].days;
+        if (monthIndex === 1 && isVestigienLeap(vestYear)) {
+            daysInMonth = 29;
+        }
+
+        if (diffDays >= daysInMonth) {
+            diffDays -= daysInMonth;
+            monthIndex++;
+        } else {
+            break;
+        }
+    }
+
+    const vestDay = diffDays + 1;
+
+    return {
+        day: vestDay,
+        month: vestMonths[monthIndex].name,
+        year: vestYear
+    };
+}
+
+/* ===== EXEMPLE D’UTILISATION ===== */
+function afficherVestigien() {
+    const today = new Date();
+    const v = getVestigienDate(today);
+    document.getElementById("vestDate").innerText =
+        v.day + " " + v.month + " " + v.year;
+}
+</script>
+</body>
+<html>
