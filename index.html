@@ -425,7 +425,7 @@ mettreAJour = function(){
   <th>Année Grégorienne</th>
   <th>Bissextile Grég. ?</th>
   <th>Année vestigienne bissextile ?</th>
-  <th>1er Januor vestigien</th>
+  <th>1er Januor</th>
   <th>Décalage cumulé</th>
 </tr>
 <tr><td>2022</td><td>Non</td><td>Non</td><td>28/08</td><td>0</td></tr>
@@ -522,49 +522,6 @@ mettreAJour = function(){
 <h3>FAQ 2 : Nombre de jours par année (cliquez ici)</h3>
 <div class="faq-content">
   <p>Chaque année vestigienne comporte <strong>~366 jours</strong>.</p>
-</div>
-
-<h3>FAQ 3 : Aires vestigiennes (cliquez ici)</h3>
-<div class="faq-content">
-  <ul id="aires"></ul>
-  <script>
-  // Total d'années
-  const total = 1000000;
-
-  // Préfixes et suffixes pour noms d'aires
-  const prefixes = ["Émergence","Conscience","Mémoire","Souffle","Horizon","Résonance","Transmutation","Clarté","Alignement","Plénitude","Aurore","Expansion","Stratification","Équilibre","Maturation","Héritage","Convergence","Profondeur","Transmission","Mutation"];
-  const suffixes = ["Originelle","Silencieuse","Cosmique","Ancestrale","Éternelle","Vibrante","Infinie","Sacrée","Suspendue","Luminale","Primordiale","Céleste","Diffuse","Radiante","Souterraine","Harmonieuse","Unifiée","Évolutive","Fondatrice","Transcendante"];
-
-  const ul = document.getElementById("aires");
-  let current = 0;
-  let i = 0;
-
-  // Fonction pour générer durée 100-200 ans (fixe par index pour stabilité)
-  function dureeVariable(index) {
-    return 100 + (index * 37 % 101); // 100 à 200 ans, stable
-  }
-
-  function articleFrancais(suffix) {
-    return "de la"; // tous féminins
-  }
-
-  // Génération dynamique
-  while (current <= total) {
-    let duree = dureeVariable(i);
-    let fin = Math.min(current + duree, total);
-
-    const prefix = prefixes[i % prefixes.length];
-    const suffix = suffixes[Math.floor(i / prefixes.length) % suffixes.length];
-    const art = articleFrancais(suffix);
-
-    const li = document.createElement("li");
-    li.textContent = `${current} – ${fin} : Aire ${art} ${prefix} ${suffix}`;
-    ul.appendChild(li);
-
-    current = fin + 1;
-    i++;
-  }
-  </script>
 </div>
 
 <h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
