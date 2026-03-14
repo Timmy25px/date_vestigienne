@@ -215,7 +215,7 @@ const JOURS = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"
 // fonction pour convertir une date vestigienne -> jour semaine
 function jourSemaineVestigien(jour, mois, annee){
 
-  // nombre total de jours depuis 01/01/0000
+  // nombre total de jours depuis 01/01/0001
   let total = jour - 1;
 
   // ajoute jours des mois précédents
@@ -225,7 +225,7 @@ function jourSemaineVestigien(jour, mois, annee){
 
   // ajoute jours des années précédentes
   for(let a=0;a<annee;a++){
-    total += estBissextile(a) ? 367 : 366;
+    total += estBissextile(a) ? 366 : 365;
   }
 
   // modulo 7 → dimanche index 0
@@ -854,7 +854,7 @@ document.querySelectorAll('.faq h3').forEach(faq => {
 
   <script>
   // ORIGINE TEMPORELLE EXACTE VESTIGIENNE (ISO UTC, précision max navigateur)
-const ORIGINE = new Date("2022-07-29T00:00:00.000Z");
+const ORIGINE = new Date("2023-07-29T00:00:00.000Z");
 
 const MOIS_VEST = [
   "Januor",
