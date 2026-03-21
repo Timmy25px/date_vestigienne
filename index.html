@@ -919,7 +919,8 @@ horlogeUltraSync();
       });
     });
   </script>
-<!-- HORLOGE VESTIGIENNE FIXE AVEC FUSEAUX REELS -->
+
+<!-- HORLOGE VESTIGIENNE FIXE AVEC FUSEAUX REELS ET DATE -->
 <style>
 #horlogeVestFixe {
   position: fixed;
@@ -932,32 +933,42 @@ horlogeUltraSync();
   text-align: center;
   color: white;
   font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #horlogeVestFixe select {
-  width: 60%;
+  width: 50%;
   font-size: 1.5rem;
   padding: 10px;
   font-family: monospace;
+  margin-right: 20px;
 }
 
-#horlogeVestFixe span {
+#horlogeVestFixe .dateHeure {
+  text-align: right;
+  font-family: monospace;
+  line-height: 1.2;
+}
+
+#horlogeVestFixe .dateHeure div {
   font-size: 1.5rem;
-  margin-left: 15px;
-  display: inline-block;
-  width: 120px; /* fixe largeur pour aligner */
-  text-align: left;
 }
 </style>
 
 <div id="horlogeVestFixe">
   <select id="vestFuseaux"></select>
-  <span id="heureVestAffiche">--:--</span>
+  <div class="dateHeure">
+    <div id="dateVestAffiche">----/--/----</div>
+    <div id="heureVestAffiche">--:--</div>
+  </div>
 </div>
 
 <script>
 const selectVest = document.getElementById("vestFuseaux");
 const heureVestAffiche = document.getElementById("heureVestAffiche");
+const dateVestAffiche = document.getElementById("dateVestAffiche");
 
 // Liste fuseaux réels (UTC−12 → UTC+12, incluant 30 et 45 min)
 const fuseauxReels = [
@@ -965,30 +976,42 @@ const fuseauxReels = [
   0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 12
 ];
 
-// Heure vestigienne = 00:00 quand Paris = 00:00
-const baseParisH = 00;
-const baseParisM = 00;
+// Date de base vestigienne : 01/01/0000 correspond au 28/08/2022 à 00:00 Paris
+const baseParis = new Date("2022-09-01T00:00:00+01:00"); 
 
 function pad(n){ return String(n).padStart(2,"0"); }
 
-function heureVest(offset) {
+function dateHeureVest(offset){
   const now = new Date();
   // Temps UTC
   const utc = now.getTime() + now.getTimezoneOffset()*60000;
   // Heure locale du fuseau
   const local = new Date(utc + offset*3600000);
   
-  // Heure vestigienne par rapport à Paris UTC+1
-  const hParis = local.getUTCHours() + 1; // Paris = UTC+1
-  const mParis = local.getUTCMinutes();
+  // Paris UTC+1
+  const diffMs = local - baseParis; // différence en ms
+  const diffMinutes = Math.floor(diffMs/60000);
   
-  let hVest = hParis - baseParisH;
-  let mVest = mParis - baseParisM;
-  if(mVest < 0){ mVest += 60; hVest -= 1; }
-  if(hVest < 0){ hVest += 24; }
-  hVest = hVest % 24;
-  
-  return pad(hVest) + ":" + pad(mVest);
+  // Conversion en jours et heures
+  let totalMinutes = diffMinutes + (baseParis.getMinutes()) + (baseParis.getHours()*60);
+  let jours = Math.floor(totalMinutes/(24*60));
+  let minutesRest = totalMinutes%(24*60);
+  let hVest = Math.floor(minutesRest/60);
+  let mVest = minutesRest%60;
+  if(hVest<0){ hVest +=24; jours -=1; }
+
+  // Conversion jours en date vestigienne
+  // Chaque année vestigienne = 365 jours
+  let annee = Math.floor(jours/365);
+  let jourAnnee = jours % 365 +1; // 1 à 365
+  // Mois simplifié : 30 jours par mois sauf dernier
+  let mois = Math.floor((jourAnnee-1)/30)+1;
+  let jour = (jourAnnee-1)%30 +1;
+
+  return {
+    date: pad(jour)+"/"+pad(mois)+"/"+pad(annee.toString().padStart(4,'0')),
+    heure: pad(hVest)+":"+pad(mVest)
+  };
 }
 
 // Remplissage du select
@@ -1002,34 +1025,30 @@ fuseauxReels.forEach(f => {
   selectVest.appendChild(o);
 });
 
-// Mise à jour de l'heure vestigienne affichée
-function majHeureVest(){
+// Mettre les fuseaux à minuit en gras
 function mettreFuseauMinuitEnGras() {
   const options = selectVest.options;
   for (let i = 0; i < options.length; i++) {
-    // reset tout d'abord
     options[i].style.fontWeight = "normal";
-    // si l'heure vestigienne avec ce fuseau est 00:00
-    if (heureVest(parseFloat(options[i].value)) === "00:00") {
-      options[i].style.fontWeight = "bold";
-    }
+    const dh = dateHeureVest(parseFloat(options[i].value));
+    if (dh.heure === "00:00") options[i].style.fontWeight = "bold";
   }
 }
 
-// Appelle après majHeureVest et à chaque intervalle
-mettreFuseauMinuitEnGras();
-setInterval(mettreFuseauMinuitEnGras, 1000);
-
+// Mise à jour de l'heure et date vestigienne
+function majHeureVest(){
   const f = parseFloat(selectVest.value);
-  heureVestAffiche.textContent = heureVest(f);
+  const dh = dateHeureVest(f);
+  heureVestAffiche.textContent = dh.heure;
+  dateVestAffiche.textContent = dh.date;
+  mettreFuseauMinuitEnGras();
 }
 
 selectVest.addEventListener("change", majHeureVest);
 majHeureVest();
-setInterval(majHeureVest,1000); // met à jour seulement le texte, pas le menu
+setInterval(majHeureVest,1000);
 </script>
 
-<script>
 // ===== SÉCURITÉ TEMPORELLE VESTIGIENNE NIVEAU 3 =====
 // Surveillance + réalignement + correction automatique
 
