@@ -976,7 +976,7 @@ const fuseauxReels = [
   0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 12
 ];
 
-// Date de base vestigienne : 01/01/0000 correspond au 28/08/2022 à 00:00 Londres
+// Date de base vestigienne : 01/01/0000 correspond au 28/08/2022 à 00:00 Paris
 const baseParis = new Date("2022-09-01T00:00:00+00:00"); 
 
 function pad(n){ return String(n).padStart(2,"0"); }
@@ -993,7 +993,7 @@ function dateHeureVest(offset){
   const diffMinutes = Math.floor(diffMs/60000);
   
   // Conversion en jours et heures
-  let totalMinutes = diffMinutes + (baseLondon.getMinutes()) + (baseLondon.getHours()*60);
+  let totalMinutes = diffMinutes + (baseParis.getMinutes()) + (baseParis.getHours()*60);
   let jours = Math.floor(totalMinutes/(24*60));
   let minutesRest = totalMinutes%(24*60);
   let hVest = Math.floor(minutesRest/60);
