@@ -418,62 +418,6 @@ mettreAJour = function(){
   Ce système rend visible l’idée que chaque instant compte. 
   Le calendrier est un outil concret pour célébrer la valeur du temps.
 </p>
-<h2>Le calendrier vestigien se déplace et se décale par rapport à début de l'année qui est basé initialement le 28 août</h2>
-<p>Cela se produit jusqu'à ce que le vestigien se recale sur le 28 août grégorien. C'est ce qu'on appelle un cycle vestigien de 146 000 Ans</p>
-
-<!DOCTYPE html><html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Prochain Nouvel An Vestigien</title>
-</head>
-<body><h2 id="next-vestigien-year">Prochain Nouvel An : …</h2><script>
-const origin = new Date('2022-08-29T00:00:00');
-
-function isGregorianLeapYear(year) {
-  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-}
-
-function isVestigianLeapYear(year) {
-  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-}
-
-function getNextVestigienNewYear() {
-  const now = new Date();
-  let vestYear = 0;
-  let vestDate = new Date(origin);
-
-  while(vestDate <= now) {
-    vestYear++;
-    vestDate.setDate(vestDate.getDate() + 365);
-
-    if (isGregorianLeapYear(vestDate.getFullYear())) {
-      vestDate.setDate(vestDate.getDate() - 1);
-    }
-    if (isVestigianLeapYear(vestYear)) {
-      vestDate.setDate(vestDate.getDate() + 1);
-    }
-
-    if (vestYear > 146000) {
-      vestDate = new Date('148022-08-28T00:00:00');
-      vestYear = 148022 - 2022;
-    }
-  }
-
-  const dd = String(vestDate.getDate()).padStart(2, '0');
-  const mm = String(vestDate.getMonth() + 1).padStart(2, '0');
-  const yyyy = vestDate.getFullYear();
-  return `${dd}/${mm}/${yyyy} (Année vestigienne ${vestYear})`;
-}
-
-function updateVestigienDate() {
-  document.getElementById('next-vestigien-year').textContent = `Prochain Nouvel An : ${getNextVestigienNewYear()}`;
-}
-
-updateVestigienDate();
-setInterval(updateVestigienDate, 1000);
-</script></body>
-</html>
-
 
 <style>
 /* Style FAQ accordéon */
@@ -508,7 +452,7 @@ setInterval(updateVestigienDate, 1000);
 <li>9 Foma  ↝</li>
 <li>10 Capel  ǂ</li>
 <li>11 Procy ʢ</li>
-<li>12 Deneb  ⅌</li>
+<li>12 Deneb  Ϫ</li>
 
 
   </ul>
