@@ -417,71 +417,71 @@ mettreAJour = function(){
   Chaque tic-tac rappelle l’importance du présent et du souvenir. 
   Ce système rend visible l’idée que chaque instant compte. 
   Le calendrier est un outil concret pour célébrer la valeur du temps.
+<p>
 </p>
-
-<style>
-/* Style FAQ accordéon */
-.faq-content {
-  display: none; /* caché par défaut */
-  margin-left: 20px;
-}
-.faq-content ul {
-  padding-left: 20px;
-}
-.faq h3 {
-  cursor: pointer;
-  user-select: none;
-}
-.faq h3:hover {
-  color: #0077cc;
-}
-</style>
 
 <div class="faq">
 <h3>Signes astrologiques vestigiens (cliquez ici)</h3> 
 <div class="faq-content">
   <ul>
-<li>1 Alde  ʔ</li>
-<li>2 Rige  Ⴣ</li>
-<li>3 Sira  Ⴤ</li>
-<li>4 Bella Ⴥ</li>
-<li>5 Spika  Ⴧ</li>
-<li>6 Vega ⟒</li>
-<li>7 Alta  Ⴢ</li>
-<li>8 Antar  Ⴠ</li>
-<li>9 Foma  ↝</li>
-<li>10 Capel  ǂ</li>
-<li>11 Procy ʢ</li>
-<li>12 Deneb  Ϫ</li>
-
-
-  </ul>
-  <p>Les signes astrologiques vestigiens changent tous les 21 du mois</p>
+    <li>1 Alde  ʔ</li>
+    <li>2 Rige  Ⴣ</li>
+    <li>3 Sira  Ⴤ</li>
+    <li>4 Bella Ⴥ</li>
+    <li>5 Spika  Ⴧ</li>
+    <li>6 Vega ⟒</li>
+    <li>7 Alta  Ⴢ</li>
+    <li>8 Antar  Ⴠ</li>
+    <li>9 Foma  ↝</li>
+    <li>10 Capel  ǂ</li>
+    <li>11 Procy ʢ</li>
+    <li>12 Deneb  Ϫ</li>
+Les signes astrologiques vestigiens changent tous les 21 du mois
+</ul>
 </div>
 
+<div class="faq">
 <h3>Nombre de jours par mois (cliquez ici)</h3> 
 <div class="faq-content">
   <ul>
-    <li>1    Januor   : 31 jours</li>
-    <li>2   Févrial  : 28 jours (Années normales) / 29 jours (Années bissextiles)</li>
-    <li>3  Marsuor : 31 jours</li>
-    <li>4   Avrion   : 30 jours</li>
-    <li>5    Maïlo    : 31 jours</li>
-    <li>6   Junel    : 30 jours</li>
-    <li>7  Juilor   : 31 jours</li>
-    <li>8 Aoustin  : 31 jours</li>
-    <li>9   Septor   : 30 jours</li>
-    <li>10    Octel    : 31 jours</li>
-    <li>11   Novin    : 30 jours</li>
-    <li>12  Décaro   : 31 jours</li>
+    <li>1 Januor : 31 jours</li>
+    <li>2 Févrial : 28 jours (Années normales) / 29 jours (Années bissextiles)</li>
+    <li>3 Marsuor : 31 jours</li>
+    <li>4 Avrion : 30 jours</li>
+    <li>5 Maïlo : 31 jours</li>
+    <li>6 Junel : 30 jours</li>
+    <li>7 Juilor : 31 jours</li>
+    <li>8 Aoustin : 31 jours</li>
+    <li>9 Septor : 30 jours</li>
+    <li>10 Octel : 31 jours</li>
+    <li>11 Novin : 30 jours</li>
+    <li>12 Décaro : 31 jours</li>
   </ul>
 </div>
+</div>
 
+<div class="faq">
+<h3>Les traditions vestigiennes (cliquez ici)</h3> 
+<div class="faq-content">
+  <ul>
+    <li>Le reveillon du nouvel an (31 decaro)</li>
+    <li>jour de l'an vestigien ou Ste Nayroza (1er Januor)</li>
+    <li>La fête des célibataires (14 Fevrial)</li>
+    <li>La Fête des célibataires est une fête censé remplacer la St valentin, faite uniquement pour les célibataires</li>
+    <li>La St Maël (29 Septor)</li>
+    <li>La saint Maël consiste, à la tombée de la nuit de penser à une ou plusieurs personnes qu'on veut garder près de nous et lancer une lanterne bleue dans le ciel</li>
+  </ul>
+</div>
+</div>
+
+<div class="faq">
 <h3>Nombre de jours par année (cliquez ici)</h3>
 <div class="faq-content">
   <p>Chaque année vestigienne comporte <strong>365 jours (Années normales) / 366 jours (Années bissextiles)</strong>.</p>
 </div>
+</div>
 
+<div class="faq">
 <h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
 <div class="faq-content">
   <ul>
@@ -490,6 +490,7 @@ mettreAJour = function(){
     <li>Connexion 4G (LTE) : ~10–40 ms</li>
     <li>Connexion WiFi (via une box) : ~5–30 ms</li>
   </ul>
+</div>
 </div>
 
 <script>
@@ -502,50 +503,6 @@ document.querySelectorAll('.faq h3').forEach(h3 => {
 });
 </script>
 
-</div>
-
-<script>
-// Accordéon FAQ
-document.querySelectorAll('.faq-title').forEach(title => {
-  title.addEventListener('click', () => {
-    const content = title.nextElementSibling;
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
-  });
-});
-
-// Génération dynamique des aires vestigiennes
-const total = 1000000;
-const prefixes = ["Émergence","Conscience","Mémoire","Souffle","Horizon","Résonance","Transmutation","Clarté","Alignement","Plénitude","Aurore","Expansion","Stratification","Équilibre","Maturation","Héritage","Convergence","Profondeur","Transmission","Mutation"];
-const suffixes = ["Originelle","Silencieuse","Cosmique","Ancestrale","Éternelle","Vibrante","Infinie","Sacrée","Suspendue","Luminale","Primordiale","Céleste","Diffuse","Radiante","Souterraine","Harmonieuse","Unifiée","Évolutive","Fondatrice","Transcendante"];
-
-const ul = document.getElementById("aires");
-let current = 0;
-let i = 0;
-
-function dureeVariable(index) {
-  return 100 + (index * 37 % 101); // 100 à 200 ans
-}
-
-function articleFrancais(suffix) {
-  return "de la"; // tous féminins
-}
-
-while (current <= total) {
-  let duree = dureeVariable(i);
-  let fin = Math.min(current + duree, total);
-
-  const prefix = prefixes[i % prefixes.length];
-  const suffix = suffixes[Math.floor(i / prefixes.length) % suffixes.length];
-  const art = articleFrancais(suffix);
-
-  const li = document.createElement("li");
-  li.textContent = `${current} – ${fin} : Aire ${art} ${prefix} ${suffix}`;
-  ul.appendChild(li);
-
-  current = fin + 1;
-  i++;
-}
-</script>
 
 <h2>Calendrier visuel vestigien :</h2>
 <div style="width:100%; height:600px; border:1px solid #ccc;">
