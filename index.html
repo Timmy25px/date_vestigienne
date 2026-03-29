@@ -848,7 +848,7 @@ const fuseauxReels = [
 ];
 
 // Temps de référence vestigien : 29/08/2022 00:00 UTC = 01/01/0000 00:00
-const refVest = new Date(Date.UTC(2022,8,02,0,0,0)); // mois 8 = août
+const refVest = new Date(Date.UTC(2022,8,01,0,0,0)); // mois 8 = août
 
 function pad(n, len=2){ return String(n).padStart(len,"0"); }
 
@@ -866,9 +866,33 @@ function heureDateVest(offset) {
   let totalJours = diffJours;
   let annee = 0;
   while (totalJours >= 365) { annee++; totalJours -= 365; } // ignore années bissextiles
-  const mois = 1 + Math.floor(totalJours/30); // approximation 30 jours/mois
-  const jour = 1 + (totalJours % 30);
+const joursParMois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+// si année bissextile (optionnel mais conseillé)
+function estBissextile(annee) {
+  return (annee % 4 === 0 && annee % 100 !== 0) || (annee % 400 === 0);
+}
+
+// totalJours = nombre de jours écoulés depuis le début de l’année
+let mois = 0;
+
+for (let i = 0; i < 12; i++) {
+  let joursCeMois = joursParMois[i];
+
+  // ajuste février si bissextile
+  if (i === 1 && estBissextile(annee)) {
+    joursCeMois = 29;
+  }
+
+  if (totalJours < joursCeMois) {
+    mois = i + 1; // mois humain (1-12)
+    break;
+  }
+
+  totalJours -= joursCeMois;
+}
+
+const jour = totalJours + 1;
   // Heure vestigienne
   const hVest = local.getUTCHours();
   const mVest = local.getUTCMinutes();
