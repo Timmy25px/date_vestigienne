@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<style>
+<style>
+/* Pour le tableau existant */
+table {
+  text-transform: none !important;
+}
+table th,
+table td {
+  text-transform: none !important;
+}
+
+/* Pour tous les menus déroulants */
+select, option {
+  text-transform: none !important;
+}
+</style>
+<head>
+<style>
+/* Tout ce qui est dans le bloc FAQ */
+.faq {
+  text-transform: none !important; /* empêche les majuscules globales */
+  font-weight: normal !important;   /* enlève le gras global */
+}
+
+/* Les titres h3 dans FAQ restent normaux */
+.faq h3 {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+
+/* Les paragraphes et listes à l’intérieur */
+.faq p, .faq li {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+
+/* Si tu as des menus déroulants (select/options) dans ce bloc */
+.faq select, .faq option {
+  text-transform: none !important;
+  font-weight: normal !important;
+}
+</style>
+  <meta charset="UTF-8">
+  <title>CCAI (Calendrier Civil et Administratif International)r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* RESET */
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* HEADER STICKY */
+    header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 10;
+      border-bottom: 1px solid #000;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+
+    .date {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .heure {
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      letter-spacing: 0.08em;
+    }
+
+    /* CONTENU */
+    main {
+      padding: 2.5rem 1.5rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .definition {
+      font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .definition h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .definition em { font-style: italic; }
+
+    /* FAQ STYLES */
+    .faq { margin-top: 2rem; }
+    .faq h3 {
+      cursor: pointer;
+      background: #eee;
+      padding: 0.7rem 1rem;
+      margin: 0.5rem 0;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .faq h3:hover { background: #ddd; }
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #f9f9f9;
+      padding: 0 1rem;
+      border-left: 3px solid #000;
+      margin-bottom: 0.5rem;
+    }
+    .faq-content p, .faq-content li { margin: 0.5rem 0; }
+
+    /* ===== BOUTON FIXE ===== */
+    .btn-fullscreen {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* ===== MODE PLEIN ÉCRAN ===== */
+    .fullscreen-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .fullscreen-date { font-size: clamp(3rem, 10vw, 100rem); font-weight: bold; }
+    .fullscreen-heure { font-size: clamp(2.5rem, 8vw, 95rem); letter-spacing: 0.1em; margin-top: 1rem; }
+    .btn-exit {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+</div>
+<script>
+function isMobileDevice() {
+  return /Android|iPhone|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
+}
+
+function isSmallScreen() {
+  return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+}
+
+function checkDisplay() {
+  const blocker = document.getElementById("mobile-blocker");
+
+  if (isMobileDevice() && isSmallScreen()) {
+    blocker.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  } else {
+    blocker.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+}
+
+window.addEventListener("load", checkDisplay);
+window.addEventListener("resize", checkDisplay);
+<script>
+// ===== AJOUT JOUR SEMAINE (01/01/0000 = dimanche) =====
+
+const JOURS = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+
+// crée le petit affichage à côté de la date si pas déjà présent
+(function(){
+  const dateDiv = document.getElementById("dateLigne");
+  if(!dateDiv) return;
+
+  const span = document.createElement("span");
+  span.id = "jourMini";
+  span.style.fontSize = "0.35em";
+  span.style.marginLeft = "10px";
+  span.style.fontWeight = "normal";
+  span.style.opacity = "0.8";
+
+  dateDiv.appendChild(span);
+})();
+
+// fonction pour convertir une date vestigienne -> jour semaine
+function jourSemaineVestigien(jour, mois, annee){
+
+  // nombre total de jours depuis 01/01/0001
+  let total = jour - 1;
+
+  // ajoute jours des mois précédents
+  for(let m=1;m<mois;m++){
+    total += joursDansMois(m);
+  }
+
+  // ajoute jours des années précédentes
+  for(let a=0;a<annee;a++){
+    total += estBissextile(a) ? 366 : 365;
+  }
+
+  // modulo 7 → dimanche index 0
+  return JOURS[ total % 7 ];
+}
+
+
+// PATCH : injecte dans ta fonction mettreAJour()
+const _oldMettreAJour = mettreAJour;
+mettreAJour = function(){
+
+  _oldMettreAJour();
+
+  // récupère la date affichée (ex: "12 Maïlo 3")
+  const txt = document.getElementById("dateLigne").innerText;
+  const parts = txt.split(" ");
+
+  if(parts.length >= 3){
+    const jour = parseInt(parts[0]);
+    const mois = MOIS_VEST.indexOf(parts[1]) + 1;
+    const annee = parseInt(parts[2]);
+
+    if(jour && mois && !isNaN(annee)){
+      const j = jourSemaineVestigien(jour,mois,annee);
+      const mini = document.getElementById("jourMini");
+      if(mini) mini.textContent = j;
+    }
+  }
+};
+</script>
+</script>
+<body>
+<!-- BLOQUEUR MOBILE -->
+<div id="mobile-blocker">
+  <div class="mobile-box">
+    <h1>Affichage non compatible 📱</h1>
+    <p>
+   <div style="text-align: left;">
+  Ce site n’est pas optimisé pour les écrans au format mobile (9:16).<br><br>
+  Pour une lecture correcte, une interface stable et une expérience fluide, il est recommandé d’utiliser un écran plus large.<br><br>
+  Si vous êtes sur un téléphone :<br>
+  1. Ouvrez Google Chrome.<br>
+  2. Cliquez sur les trois points en haut à droite, à côté de la barre d’adresse.<br>
+  3. Faites défiler le menu déroulant.<br>
+  4. Sélectionnez <strong>« Version ordinateur »</strong>.
+</div>
+    </p>
+
+    <p class="sub">
+      ➜ Accès recommandé depuis un ordinateur ou une tablette.
+    </p>
+
+    <div class="signature">
+      Système d’affichage adaptatif actif.
+    </div>
+  </div>
+</div>
+
+  <header>
+    <div id="dateLigne" class="date"></div>
+    <div id="heureLigne" class="heure"></div>
+<div style="font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.3rem;">Temps international</div>
+
+  </header>
+
+  <main>
+    <div class="definition">
+      <h1>CCAI (Calendrier Civil et Administratif International)</h2>
+<p>
+<p>
+
+      <!-- CONTENU HISTORIQUE -->
+<h2>Genèse du CCAI</h2>
+
+<p>
+  Le Calendrier Civil et Administratif International (CCAI) est entré en vigueur le 1er janvier 2028, établissant un point de référence temporel commun et standardisé.
+  Ce système a été conçu afin de proposer une base de datation unifiée, indépendante des cadres culturels et historiques existants.
+</p>
+
+<p>
+  Sa création répond à un constat de divergence entre différents systèmes de référence temporelle, pouvant entraîner des incohérences dans la communication et la planification.
+  L’objectif initial du CCAI est donc de proposer un cadre homogène facilitant la synchronisation des activités humaines à l’échelle internationale.
+</p>
+
+<h2>Objectif du système</h2>
+
+<p>
+  Le CCAI vise à établir un référentiel temporel stable, cohérent et universel.
+  Il ne remplace pas les calendriers existants mais propose une couche de lecture alternative destinée aux usages civils et administratifs.
+</p>
+
+<h2>Point zéro du système</h2>
+
+<p>
+  Le 1er janvier 2028 constitue le point zéro du CCAI (année 0000).
+  Ce choix définit une origine claire et fixe, permettant une structuration linéaire et prévisible des années.
+</p>
+
+<p>
+  Cette origine temporelle facilite les calculs, la conversion des dates et l’harmonisation des systèmes d’information.
+</p>
+
+<h2>Principes fondamentaux</h2>
+
+<p>
+  Le CCAI repose sur plusieurs principes :
+</p>
+
+<ul>
+  <li>Neutralité culturelle et institutionnelle</li>
+  <li>Compatibilité avec les systèmes de datation existants</li>
+  <li>Lisibilité et simplicité structurelle</li>
+  <li>Stabilité à long terme</li>
+</ul>
+
+<h2>Fonction du calendrier</h2>
+
+<p>
+  Le calendrier CCAI constitue un outil de référence permettant une meilleure coordination des activités, des échanges et des systèmes de planification.
+  Il offre une base commune utilisable dans les environnements techniques, administratifs et organisationnels.
+</p>
+
+<h2>Portée et usage</h2>
+
+<p>
+  Le CCAI est conçu comme un système de référence complémentaire.
+  Il peut être utilisé en parallèle des calendriers traditionnels afin de faciliter les conversions et la normalisation des données temporelles.
+</p>
+
+<h2>Synthèse</h2>
+
+<p>
+  Entré en vigueur le 1er janvier 2028, le Calendrier Civil et Administratif International constitue une proposition de standardisation du temps.
+  Il définit une origine unique et une structure cohérente, dans une logique d’unification et de simplification des repères temporels à l’échelle internationale.
+</p>
+
+
+<div class="faq">
+<h3>Décalage de l'horloge selon le type de connexion (cliquez ici)</h3>
+<div class="faq-content">
+  <ul>
+    <li>Connexion LAN (RJ45/Ethernet) : ~1 ms</li>
+    <li>Connexion fibre (Fibre optique) : ~2–5 ms</li>
+    <li>Connexion 4G (LTE) : ~10–40 ms</li>
+    <li>Connexion WiFi (via une box) : ~5–30 ms</li>
+  </ul>
+</div>
+</div>
+
+<script>
+// Script pour faire fonctionner les FAQ accordéon
+document.querySelectorAll('.faq h3').forEach(h3 => {
+  h3.addEventListener('click', () => {
+    const content = h3.nextElementSibling;
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  });
+});
+</script>
+
+</div>
+
+<style>
+.video-section {
+  margin: 2rem 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.video-section h3 {
+  font-size: 1.4em;
+  margin-bottom: 0.5rem;
+}
+
+.video-section .video-desc {
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.video-section video {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+</style>
+<style>
+.video-vestigien {
+  margin: 2rem 0;
+  max-width: 900px;
+}
+
+.video-vestigien h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: #222;
+}
+
+.video-vestigien .video-description {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 0.5rem;
+  color: #444;
+}
+</style>
+
+<style>
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+video {
+  max-width: 90%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+</style>
+
+
+<style>
+#mobile-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0a;
+  color: white;
+  z-index: 999999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.mobile-box {
+  max-width: 420px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+}
+
+.mobile-box h1 {
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.mobile-box p {
+  font-size: 1em;
+  line-height: 1.5em;
+  opacity: 0.9;
+}
+
+.mobile-box .sub {
+  margin-top: 15px;
+  font-size: 0.95em;
+  opacity: 0.7;
+}
+
+.mobile-box .signature {
+  margin-top: 20px;
+  font-size: 0.75em;
+  opacity: 0.4;
+  letter-spacing: 1px;
+}
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Toggle uniquement ce bloc
+    content.classList.toggle('open');
+  });
+});
+</script>
+
+
+<style>
+.faq h3 {
+  cursor: pointer;
+  background: #eee;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.faq h3:hover { background: #ddd; }
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: #f9f9f9;
+  border-left: 3px solid #000;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+.faq-content.open {
+  max-height: 1000px; /* assez grand pour tout le contenu */
+  padding: 0.5rem 1rem;
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq h3').forEach(faq => {
+  faq.addEventListener('click', () => {
+    const content = faq.nextElementSibling;
+
+    // Si déjà ouvert, on ferme
+    if(content.classList.contains('open')){
+      content.classList.remove('open');
+    } else {
+      // Ferme toutes les autres FAQ
+      document.querySelectorAll('.faq-content').forEach(fc => fc.classList.remove('open'));
+      // Ouvre celle-ci
+      content.classList.add('open');
+    }
+  });
+});
+</script>
+             </div>
+                 </main>
+
+  <!-- BOUTON PLEIN ÉCRAN -->
+  <button class="btn-fullscreen" onclick="ouvrirPleinEcran()">afficher la date en plein ecran</button>
+  <div class="fullscreen-overlay" id="pleinEcran">
+    <div id="dateFull" class="fullscreen-date"></div>
+    <div id="heureFull" class="fullscreen-heure"></div>
+    <button class="btn-exit" onclick="fermerPleinEcran()">quitter le plein ecran</button>
+  </div>
+
+  <script>
+// ORIGINE TEMPORELLE EXACTE VESTIGIENNE (ISO UTC, précision max navigateur)
+const ORIGINE = new Date("2028-01-01T00:00:00.000Z");
+
+const MOIS_VEST = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Decembre"
+];
+
+function pad(n, taille) { return String(n).padStart(taille, "0"); }
+
+function estBissextile(annee) {
+  return (annee % 400 === 0) || (annee % 100 !== 0 && annee % 4 === 0);
+}
+
+function joursDansMois(mois) {
+  return [31,30,31,30,31,30,31,31,30,31,30,31][mois-1];
+}
+
+function joursDansAnnee(a) {
+  return estBissextile(a) ? 367 : 366;
+}
+
+function mettreAJour() {
+  const maintenant = new Date();
+  let diffMs = maintenant - ORIGINE;
+
+  let totalSecondes = Math.floor(diffMs / 1000);
+
+  const secondes = ((totalSecondes % 60) + 60) % 60;
+  totalSecondes = Math.floor(totalSecondes / 60);
+
+  const minutes = ((totalSecondes % 60) + 60) % 60;
+  totalSecondes = Math.floor(totalSecondes / 60);
+
+  const heures = ((totalSecondes % 24) + 24) % 24;
+  let totalJours = Math.floor(totalSecondes / 24);
+
+  // ===== ANNÉE VESTIGIENNE AVEC NÉGATIFS =====
+  let annee = 0;
+
+  if (totalJours >= 0) {
+    while (totalJours >= joursDansAnnee(annee)) {
+      totalJours -= joursDansAnnee(annee);
+      annee++;
+    }
+  } else {
+    while (totalJours < 0) {
+      annee--;
+      totalJours += joursDansAnnee(annee);
+    }
+  }
+
+  // ===== MOIS VESTIGIEN =====
+  let mois = 1;
+  while (true) {
+    let jdm = joursDansMois(mois);
+    if (totalJours >= jdm) {
+      totalJours -= jdm;
+      mois++;
+    } else break;
+  }
+
+  // ===== JOUR =====
+  let jourVest = totalJours + 1;
+
+  // ===== FORMAT ANNÉE SIGNÉE =====
+  const signe = annee < 0 ? "-" : "";
+  const anneeTxt = signe + pad(Math.abs(annee), 4);
+
+  const dateTxt = `${pad(jourVest,2)} ${MOIS_VEST[mois-1]} ${anneeTxt}`;
+  const heureTxt = `${pad(heures,2)}:${pad(minutes,2)}:${pad(secondes,2)}`;
+
+  document.getElementById("dateLigne").textContent = dateTxt;
+  document.getElementById("heureLigne").textContent = heureTxt;
+  document.getElementById("dateFull").textContent = dateTxt;
+  document.getElementById("heureFull").textContent = heureTxt;
+}
+
+// ===== SYNCHRONISATION TEMPORELLE HAUTE PRÉCISION VESTIGIENNE =====
+let originePerf = performance.now();
+let origineDate = Date.now();
+
+function horlogeUltraSync() {
+  const nowPerf = performance.now();
+  const elapsed = nowPerf - originePerf;
+  const nowReal = origineDate + elapsed;
+  const drift = nowReal % 1000;
+  const correction = 1000 - drift;
+
+  mettreAJour();
+  setTimeout(horlogeUltraSync, correction);
+}
+
+// recalage automatique toutes les 60s pour éviter dérive longue
+setInterval(() => {
+  originePerf = performance.now();
+  origineDate = Date.now();
+}, 60000);
+
+// Lancement
+horlogeUltraSync();
+
+function ouvrirPleinEcran() { document.getElementById("pleinEcran").style.display = "flex"; }
+function fermerPleinEcran() { document.getElementById("pleinEcran").style.display = "none"; }
+
+mettreAJour();;
+
+    // FAQ toggle
+    const faqs = document.querySelectorAll('.faq h3');
+    faqs.forEach(faq => {
+      faq.addEventListener('click', () => {
+        const content = faq.nextElementSibling;
+        content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+      });
+    });
+  </script>
+ 
+ <style>
+#horlogeVestFixe {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  padding: 12px;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-family: monospace;
+}
+
+#horlogeVestFixe select {
+  width: 50%;
+  font-size: 1.5rem;
+  padding: 10px;
+  font-family: monospace;
+}
+
+#horlogeVestFixe .dateHeure {
+  width: 50%;
+  text-align: right;
+  font-size: 1.5rem;
+}
+
+.dateVest {
+  display: block;
+}
+
+.heureVest {
+  display: block;
+}
+</style>
+
+<div id="horlogeVestFixe">
+  <select id="vestFuseaux"></select>
+
+  <div class="dateHeure">
+    <span class="dateVest"></span>
+    <span class="heureVest"></span>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const select = document.getElementById("vestFuseaux");
+  const dateEl = document.querySelector(".dateVest");
+  const heureEl = document.querySelector(".heureVest");
+
+  const fuseaux = [
+    -12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4.5, -4, -3.5, -3, -2, -1,
+    0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5,
+    10, 10.5, 11, 12, 12.75, 13, 14, 15
+  ];
+
+  const ORIGINE = new Date("2028-01-01T00:00:00.000Z");
+
+  function pad(n){ return String(Math.floor(n)).padStart(2,"0"); }
+
+  function joursMois(m){
+    return [31,30,31,30,31,30,31,31,30,31,30,31][m-1];
+  }
+
+  function bissextile(a){
+    return (a%400===0)||(a%4===0&&a%100!==0);
+  }
+
+  function joursAn(a){
+    return bissextile(a)?367:366;
+  }
+
+  function calcul(offset){
+
+    const now = Date.now() + offset*3600000;
+    let diff = Math.floor((now - ORIGINE.getTime())/1000);
+
+    let sec = ((diff%60)+60)%60;
+    diff = Math.floor(diff/60);
+
+    let min = ((diff%60)+60)%60;
+    diff = Math.floor(diff/60);
+
+    let h = ((diff%24)+24)%24;
+    let jours = Math.floor(diff/24);
+
+    let annee = 0;
+
+    if(jours>=0){
+      while(jours>=joursAn(annee)){
+        jours -= joursAn(annee);
+        annee++;
+      }
+    } else {
+      while(jours<0){
+        annee--;
+        jours += joursAn(annee);
+      }
+    }
+
+    let mois = 1;
+    while(mois<=12 && jours>=joursMois(mois)){
+      jours -= joursMois(mois);
+      mois++;
+    }
+
+    let jour = jours+1;
+
+    const signe = annee < 0 ? "-" : "";
+    const anneeTxt = signe + String(Math.abs(annee)).padStart(4,"0");
+
+    return {
+      date: `${pad(jour)}/${pad(mois)}/${anneeTxt}`,
+      heure: `${pad(h)}:${pad(min)}`
+    };
+  }
+
+  // fuseaux
+  fuseaux.forEach(f=>{
+    const opt=document.createElement("option");
+    const s=f>=0?"+":"-";
+    const h=Math.floor(Math.abs(f));
+    const m=(Math.abs(f)%1)*60;
+
+    opt.value=f;
+    opt.textContent=`UTC${s}${h}${m?":"+pad(m):""}`;
+    select.appendChild(opt);
+  });
+
+  select.value="0";
+
+  function update(){
+    const res = calcul(parseFloat(select.value));
+
+    dateEl.textContent = res.date;
+    heureEl.textContent = res.heure;
+  }
+
+  select.addEventListener("change", update);
+
+  update();
+  setInterval(update,1000);
+
+});
+</script>
+
+}
+
+  
